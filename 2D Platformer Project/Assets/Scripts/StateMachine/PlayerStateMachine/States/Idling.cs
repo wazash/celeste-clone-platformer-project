@@ -5,7 +5,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
 {
     public class Idling : Grounded
     {
-        private const string NAME = "Idling";
+        private const string NAME = "Idling";   // State AND animation name
 
         public Idling(PlayerSM stateMachine) : base(stateMachine, NAME)
         {
@@ -15,7 +15,8 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
         public override void Enter()
         {
             base.Enter();
-            DecelerateWhileIdling();
+
+            sm.Animator.Play(NAME);
         }
 
         public override void Exit()
@@ -29,20 +30,25 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
 
             if (input.x != 0)
             {
-                stateMachine.ChangeState(sm.WalkingState);
+                stateMachine.ChangeState(sm.RuningState);
             }
         }
 
         public override void UpdatePhysics()
         {
             base.UpdatePhysics();
+
+            DecelerateWhileIdling(sm.PlayerData.DecelerationFactor, sm.PlayerData.MinVelocityX);
         }
         #endregion
 
         #region Own Methods
-        private void DecelerateWhileIdling()
+        private void DecelerateWhileIdling(float factor, float minVelocityX)
         {
-            sm.Rigidbody.velocity = new Vector2(sm.Rigidbody.velocity.x / sm.PlayerData.DecelerationFactor, sm.Rigidbody.velocity.y);
+            if(Mathf.Abs(sm.Rigidbody.velocity.x) > minVelocityX)
+                sm.Rigidbody.velocity = new Vector2(sm.Rigidbody.velocity.x * factor, sm.Rigidbody.velocity.y);
+            else 
+                sm.Rigidbody.velocity = new Vector2(0, sm.Rigidbody.velocity.y);
         } 
         #endregion
 

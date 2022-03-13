@@ -13,7 +13,7 @@ namespace Assets.Scripts.StateMachine
             Name = name;
         }
 
-        public virtual void Enter() { Debug.Log($"{Name} from BaseState."); }
+        public virtual void Enter() { }
         public virtual void UpdateLogic() { }
         public virtual void UpdatePhysics() { }
         public virtual void Exit() { }

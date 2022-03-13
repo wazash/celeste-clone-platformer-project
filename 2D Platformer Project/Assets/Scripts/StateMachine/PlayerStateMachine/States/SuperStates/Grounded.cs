@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.StateMachine.PlayerStateMachine.PlayerStates.SuperStates
 {
@@ -33,12 +28,34 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.PlayerStates.SuperState
             base.UpdateLogic();
 
             input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+            sm.FlipDirection(input);
+
+            if (!sm.CheckGrounded())
+            {
+                if(sm.Rigidbody.velocity.y > 0)
+                    stateMachine.ChangeState(sm.RaisingState);
+                if (sm.Rigidbody.velocity.y < 0)
+                    stateMachine.ChangeState(sm.FallingState);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                sm.Rigidbody.AddForce(Vector2.up * sm.PlayerData.JumpForce, ForceMode2D.Impulse);
+            }
+
         }
 
         public override void UpdatePhysics()
         {
             base.UpdatePhysics();
-        } 
+
+
+        }
+        #endregion
+
+        #region Own Methods
+
         #endregion
     }
 }

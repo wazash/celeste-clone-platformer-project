@@ -7,7 +7,8 @@ namespace Assets.Scripts.StateMachine
 {
     public abstract class StateMachineBase : MonoBehaviour
     {
-        private StateBase currentState;
+        public StateBase currentState;
+        public StateBase previousState;
 
         private void Start()
         {
@@ -30,6 +31,7 @@ namespace Assets.Scripts.StateMachine
         {
             currentState?.Exit();
 
+            previousState = currentState;
             currentState = newState;
             currentState?.Enter();
         }

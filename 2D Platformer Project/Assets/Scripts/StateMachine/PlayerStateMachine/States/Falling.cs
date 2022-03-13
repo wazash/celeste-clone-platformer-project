@@ -1,20 +1,21 @@
-﻿using Assets.Scripts.StateMachine.PlayerStateMachine.PlayerStates.SuperStates;
+﻿using Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates;
 using UnityEngine;
 
 namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
 {
-    public class Walking : Grounded
+    public class Falling : InAir
     {
-        private const string NAME = "Walking";
+        private const string NAME = "Falling";
 
-        public Walking(PlayerSM stateMachine) : base(stateMachine, NAME)
+        public Falling(PlayerSM stateMachine) : base(stateMachine, NAME)
         {
         }
 
-        #region Overrides Methods
         public override void Enter()
         {
             base.Enter();
+
+            sm.Animator.Play(NAME);
         }
 
         public override void Exit()
@@ -26,24 +27,21 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
         {
             base.UpdateLogic();
 
-            if (input.x == 0)
+            if(sm.Rigidbody.velocity.y > 0)
             {
-                stateMachine.ChangeState(sm.IdlingState);
+                stateMachine.ChangeState(sm.RaisingState);
             }
         }
 
         public override void UpdatePhysics()
         {
             base.UpdatePhysics();
-            Move();
+            MoveWhileFalling();
         }
-        #endregion
 
-        #region Own Methods
-        private void Move()
+        private void MoveWhileFalling()
         {
             sm.Rigidbody.velocity = new Vector2(sm.PlayerData.Speed * input.x, sm.Rigidbody.velocity.y);
-        } 
-        #endregion
+        }
     }
 }
