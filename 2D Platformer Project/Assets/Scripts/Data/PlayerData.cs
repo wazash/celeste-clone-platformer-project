@@ -16,9 +16,35 @@ namespace Assets.Scripts.Data
         [Header("Jumping data")]
         public float JumpForce = 7.0f;
 
+        [Header("Walling data")]
+        [Range(0f, 5f)]
+        public float DefaultGravityScale = 2f;
+        [Range (0f, 3f)]
+        public float SlidingGravityFactor = 2f;
+        [Range(0f, 3f)]
+        public float ClimbingGravityFactor = 2f;
+        public float Stamina = 5f;
+        public Vector2 ChangePositionOffset;
+
+        [Header("Input Axis names")]
+        public AxisName HorizontalAxis = AxisName.Horizontal;
+        public AxisName VerticalAxis = AxisName.Vertical;
+        public AxisName JumpAxis = AxisName.Jump;
+        public AxisName DashAxis = AxisName.Dash;
+        public AxisName GrabWallAxis = AxisName.GrabWall;
+
         private void OnEnable()
         {
             IsFacingRight = true;
         }
+    }
+
+    public enum AxisName
+    {
+        Horizontal,
+        Vertical,
+        Jump,
+        Dash,
+        GrabWall
     }
 }

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.StateMachine
@@ -27,7 +24,7 @@ namespace Assets.Scripts.StateMachine
             currentState?.UpdatePhysics();
         }
 
-        public void ChangeState(StateBase newState) 
+        public void ChangeState(StateBase newState)
         {
             currentState?.Exit();
 
@@ -40,5 +37,5 @@ namespace Assets.Scripts.StateMachine
         {
             return null;
         }
-    } 
+    }
 }

@@ -28,7 +28,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
         {
             base.UpdateLogic();
 
-            if (input.x != 0)
+            if (sm.Rigidbody.velocity.x != 0)
             {
                 stateMachine.ChangeState(sm.RuningState);
             }

@@ -1,22 +1,22 @@
-﻿using Assets.Scripts.StateMachine.PlayerStateMachine.PlayerStates.SuperStates;
+﻿using Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates;
 using UnityEngine;
 
 namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
 {
-    public class Runing : Grounded
+    public class WallGrabClimbing : WallGrabbed
     {
-        private const string NAME = "Runing";
-
-        public Runing(PlayerSM stateMachine) : base(stateMachine, NAME)
+        private const string NAME = "WallGrabClimbing";
+        public WallGrabClimbing(PlayerSM stateMachine) : base(stateMachine, NAME)
         {
         }
 
-        #region Overrides Methods
         public override void Enter()
         {
             base.Enter();
 
             sm.Animator.Play(NAME);
+
+            sm.Rigidbody.gravityScale = -sm.PlayerData.DefaultGravityScale / sm.PlayerData.ClimbingGravityFactor;
         }
 
         public override void Exit()
@@ -28,22 +28,15 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
         {
             base.UpdateLogic();
 
-            if (sm.Rigidbody.velocity.x == 0)
+            if(input.y == 0)
             {
-                stateMachine.ChangeState(sm.IdlingState);
+                stateMachine.ChangeState(sm.WallGrabIdlingState);
             }
         }
 
         public override void UpdatePhysics()
         {
             base.UpdatePhysics();
-
         }
-        #endregion
-
-        #region Own Methods
-
-
-        #endregion
     }
 }

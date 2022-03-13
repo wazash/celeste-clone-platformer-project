@@ -27,7 +27,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.PlayerStates.SuperState
         {
             base.UpdateLogic();
 
-            input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            input = new Vector2(Input.GetAxisRaw(sm.PlayerData.HorizontalAxis.ToString()), Input.GetAxisRaw(sm.PlayerData.VerticalAxis.ToString()));
 
             sm.FlipDirection(input);
 
@@ -39,9 +39,14 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.PlayerStates.SuperState
                     stateMachine.ChangeState(sm.FallingState);
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetButtonDown(sm.PlayerData.JumpAxis.ToString()))
             {
                 sm.Rigidbody.AddForce(Vector2.up * sm.PlayerData.JumpForce, ForceMode2D.Impulse);
+            }
+
+            if(sm.CheckCanGrabWall() && Input.GetButton(sm.PlayerData.GrabWallAxis.ToString()))
+            {
+                stateMachine.ChangeState(sm.WallGrabIdlingState);
             }
 
         }
@@ -50,12 +55,15 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.PlayerStates.SuperState
         {
             base.UpdatePhysics();
 
-
+            RunWhileGrounded();
         }
         #endregion
 
         #region Own Methods
-
+        private void RunWhileGrounded()
+        {
+            sm.Rigidbody.velocity = new Vector2(sm.PlayerData.Speed * input.x, sm.Rigidbody.velocity.y);
+        }
         #endregion
     }
 }
