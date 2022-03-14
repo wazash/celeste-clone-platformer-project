@@ -32,6 +32,11 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
             {
                 stateMachine.ChangeState(sm.WallGrabIdlingState);
             }
+
+            if(input.y < 0)
+            {
+                stateMachine.ChangeState(sm.WallGrabSlidingState);
+            }
         }
 
         public override void UpdatePhysics()

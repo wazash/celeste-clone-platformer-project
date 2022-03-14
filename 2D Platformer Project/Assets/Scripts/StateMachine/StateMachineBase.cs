@@ -7,19 +7,19 @@ namespace Assets.Scripts.StateMachine
         public StateBase currentState;
         public StateBase previousState;
 
-        private void Start()
+        protected virtual void Start()
         {
             currentState = GetInitialState();
 
             currentState?.Enter();
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             currentState?.UpdateLogic();
         }
 
-        private void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             currentState?.UpdatePhysics();
         }

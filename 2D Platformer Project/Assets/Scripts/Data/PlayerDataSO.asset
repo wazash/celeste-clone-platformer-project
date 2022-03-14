@@ -15,12 +15,13 @@ MonoBehaviour:
   Speed: 7.5
   MinVelocityX: 0.01
   DecelerationFactor: 0.6
-  IsFacingRight: 0
+  IsFacingRight: 1
   JumpForce: 10
   DefaultGravityScale: 3
-  SlidingGravityFactor: 2
+  SlidingGravityFactor: 2.25
   ClimbingGravityFactor: 3
   Stamina: 5
+  ChangePositionOffset: {x: 0.4, y: 0.65}
   HorizontalAxis: 0
   VerticalAxis: 1
   JumpAxis: 2

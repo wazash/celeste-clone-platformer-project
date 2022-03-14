@@ -38,6 +38,11 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
                 stateMachine.ChangeState(sm.WallGrabIdlingState);
             }
 
+            if(input.y > 1)
+            {
+                stateMachine.ChangeState(sm.WallGrabClimbingState);
+            }
+
         }
 
         public override void UpdatePhysics()

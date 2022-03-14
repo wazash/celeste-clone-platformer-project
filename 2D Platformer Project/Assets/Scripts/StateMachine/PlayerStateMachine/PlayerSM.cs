@@ -66,10 +66,13 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
             #endregion
         }
 
+        #region Overrided Methods
         protected override StateBase GetInitialState()
         {
             return IdlingState;
         }
+        #endregion
+
 
         public bool CheckGrounded()
         {
@@ -120,5 +123,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube(botCornerGrabChecker.position, botCornerGrabCheckerSize);
         }
+
+
     }
 }

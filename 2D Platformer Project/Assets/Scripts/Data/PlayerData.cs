@@ -15,13 +15,15 @@ namespace Assets.Scripts.Data
 
         [Header("Jumping data")]
         public float JumpForce = 7.0f;
+        [Range (0f, .5f)]
+        public float WallJumpUpMiltiplier;
 
         [Header("Walling data")]
         [Range(0f, 5f)]
         public float DefaultGravityScale = 2f;
-        [Range (0f, 3f)]
+        [Range (0f, 5f)]
         public float SlidingGravityFactor = 2f;
-        [Range(0f, 3f)]
+        [Range(0f, 5f)]
         public float ClimbingGravityFactor = 2f;
         public float Stamina = 5f;
         public Vector2 ChangePositionOffset;

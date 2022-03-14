@@ -47,7 +47,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates
                 stateMachine.ChangeState(sm.WallGrabIdlingState);
             }
 
-            if (sm.CheckCanCornerGrab() && Input.GetButton(sm.PlayerData.JumpAxis.ToString()))
+            if (sm.CheckCanCornerGrab() && Input.GetButton(sm.PlayerData.JumpAxis.ToString()) && (Mathf.Abs(input.x) > 0 || input.y > 0))
             {
                 stateMachine.ChangeState(sm.WallGrabCornerClimbingState);
             }

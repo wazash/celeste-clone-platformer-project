@@ -31,6 +31,11 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates
 
             input = new Vector2(Input.GetAxisRaw(sm.PlayerData.HorizontalAxis.ToString()), Input.GetAxisRaw(sm.PlayerData.VerticalAxis.ToString()));
 
+            if (Input.GetButtonDown(sm.PlayerData.JumpAxis.ToString()))
+            {
+                WallJump();
+            }
+
             // Change states conditions
             if (Input.GetButtonUp(sm.PlayerData.GrabWallAxis.ToString()) && sm.currentState.Name != sm.WallGrabCornerClimbingState.Name || !sm.CheckCanGrabWall())
             {
@@ -44,7 +49,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates
                 }
             }
 
-            if (sm.CheckCanCornerGrab())
+            if (sm.CheckCanCornerGrab() && input.y > 0)
             {
                 stateMachine.ChangeState(sm.WallGrabCornerClimbingState);
             }
@@ -53,6 +58,29 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates
         public override void UpdatePhysics()
         {
             base.UpdatePhysics();
+
+
+        }
+
+        // ========= OWN METHODS =========
+
+        private void WallJump()
+        {
+            sm.Rigidbody.velocity = Vector2.zero;
+
+            if(input.y >= 0 && input.x == 0)
+            {
+                sm.Rigidbody.AddForce(sm.PlayerData.JumpForce * sm.PlayerData.WallJumpUpMiltiplier * Vector2.one, ForceMode2D.Impulse);
+            }
+
+            if (sm.transform.localScale.x < 0)
+            {
+                sm.Rigidbody.AddForce(sm.PlayerData.JumpForce * Vector2.one, ForceMode2D.Impulse);
+            }
+            else
+            {
+                sm.Rigidbody.AddForce(sm.PlayerData.JumpForce * new Vector2(-1, 1), ForceMode2D.Impulse);
+            }
         }
     }
 }
