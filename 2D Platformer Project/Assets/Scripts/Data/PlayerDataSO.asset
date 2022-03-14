@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: PlayerDataSO
   m_EditorClassIdentifier: 
   Speed: 7.5
-  MinVelocityX: 0.01
+  MinVelocityX: 0.1
   DecelerationFactor: 0.6
-  IsFacingRight: 1
+  IsFacingRight: 0
   JumpForce: 8
   WallJumpUpMiltiplier: 0.21
   DefaultGravityScale: 3
   SlidingGravityFactor: 2.25
   ClimbingGravityFactor: 3
   Stamina: 5
-  ChangePositionOffset: {x: 0.4, y: 0.65}
+  ChangePositionOffset: {x: 0.4, y: 0.68}
   HorizontalAxis: 0
   VerticalAxis: 1
   JumpAxis: 2

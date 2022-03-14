@@ -31,7 +31,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
         {
             base.UpdateLogic();
 
-            if(sm.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+            if (sm.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             {
                 // Change character position after animation
                 ChagePositionAfterEndAnimation(); // Causes multiple execute Enter()?? Don't know why the hell... But does not disturb
