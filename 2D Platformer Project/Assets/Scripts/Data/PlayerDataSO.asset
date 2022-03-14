@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bffac0595b8ef3444a2115225c4ad3a4, type: 3}
   m_Name: PlayerDataSO
   m_EditorClassIdentifier: 
-  Speed: 7.5
+  Speed: 5.5
   MinVelocityX: 0.1
   DecelerationFactor: 0.6
-  IsFacingRight: 0
+  IsFacingRight: 1
   JumpForce: 8
   WallJumpUpMiltiplier: 0.21
   DefaultGravityScale: 3
