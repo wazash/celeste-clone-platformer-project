@@ -16,7 +16,8 @@ MonoBehaviour:
   MinVelocityX: 0.01
   DecelerationFactor: 0.6
   IsFacingRight: 1
-  JumpForce: 10
+  JumpForce: 8
+  WallJumpUpMiltiplier: 0.21
   DefaultGravityScale: 3
   SlidingGravityFactor: 2.25
   ClimbingGravityFactor: 3

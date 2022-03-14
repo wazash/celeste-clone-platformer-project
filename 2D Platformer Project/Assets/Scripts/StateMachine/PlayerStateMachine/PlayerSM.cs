@@ -74,6 +74,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
         #endregion
 
 
+        #region Own Methods
         public bool CheckGrounded()
         {
             return Physics2D.OverlapBox(groundChecker.position, groundCheckerSize, 0.0f, groundLayer);
@@ -119,11 +120,10 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
             //Corner Grab Checker
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(topCornerGrabChecker.position, topCornerGrabCheckerSize);
-            
+
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube(botCornerGrabChecker.position, botCornerGrabCheckerSize);
-        }
-
-
+        } 
+        #endregion
     }
 }
