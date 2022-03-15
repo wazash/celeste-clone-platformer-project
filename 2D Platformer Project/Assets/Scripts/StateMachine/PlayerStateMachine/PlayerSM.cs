@@ -71,6 +71,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
         {
             return IdlingState;
         }
+
         #endregion
 
 
