@@ -3,9 +3,12 @@ using UnityEngine;
 
 namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
 {
+    /// <summary>
+    /// A substate of the InAir state. Player is falling
+    /// </summary>
     public class Falling : InAir
     {
-        private const string NAME = "Falling";
+        private const string NAME = "Falling";  // State AND animation name
 
         public Falling(PlayerSM stateMachine) : base(stateMachine, NAME)
         {
@@ -15,7 +18,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
         {
             base.Enter();
 
-            sm.Animator.Play(NAME);
+            sm.Animator.Play(NAME);     // Play Falling animation from player Aniomator
         }
 
         public override void Exit()
@@ -27,21 +30,38 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
         {
             base.UpdateLogic();
 
-            if(sm.Rigidbody.velocity.y > 0)
+            #region Logic
+
+            #endregion
+
+            #region Chage State
+
+            if (sm.Rigidbody.velocity.y > 0)
             {
-                stateMachine.ChangeState(sm.RaisingState);
-            }
+                stateMachine.ChangeState(sm.RaisingState);  // Change state to Raising if vertical velocity is directly changed into positive 
+            } 
+
+            #endregion
         }
 
         public override void UpdatePhysics()
         {
             base.UpdatePhysics();
-            MoveWhileFalling();
+
+            MoveWhileFalling(); // Move player while falling (seperate from raising movement)
         }
 
+        #region Own Methods
+
+        /// <summary>
+        /// Allow move player while falling
+        /// </summary>
+        /// 
         private void MoveWhileFalling()
         {
             sm.Rigidbody.velocity = new Vector2(sm.PlayerData.Speed * input.x, sm.Rigidbody.velocity.y);
-        }
+        } 
+
+        #endregion
     }
 }

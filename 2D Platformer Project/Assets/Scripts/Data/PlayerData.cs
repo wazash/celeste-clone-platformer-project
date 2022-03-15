@@ -21,7 +21,7 @@ namespace Assets.Scripts.Data
         [Header("Walling data")]
         [Range(0f, 5f)]
         public float DefaultGravityScale = 2f;
-        [Range (0f, 5f)]
+        [Range (0f, 1f)]
         public float SlidingGravityFactor = 2f;
         [Range(0f, 5f)]
         public float ClimbingGravityFactor = 2f;

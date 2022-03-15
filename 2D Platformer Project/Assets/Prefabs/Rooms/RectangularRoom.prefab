@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3672521141725330313}
   - component: {fileID: 3672521141725330312}
   m_Layer: 0
-  m_Name: CM vcam2
+  m_Name: CM vcam1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3672521141725330314}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5004444, z: -10}
+  m_LocalPosition: {x: 0.402, y: 0.24622223, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3672521142713330161}
@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c628681680f064a49a1430dc1b4f9224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  virtualCamera: {fileID: 3672521141725330314}
+  virtualCamera: {fileID: 3672521141725330313}
 --- !u!1 &3672521142713330160
 GameObject:
   m_ObjectHideFlags: 0

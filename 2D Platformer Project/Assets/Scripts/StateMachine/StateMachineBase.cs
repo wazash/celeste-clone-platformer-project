@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.StateMachine
 {
+    /// <summary>
+    /// Base for all StateMachines.
+    /// </summary>
     public abstract class StateMachineBase : MonoBehaviour
     {
         public StateBase currentState;
@@ -33,6 +36,10 @@ namespace Assets.Scripts.StateMachine
             currentState?.Enter();
         }
 
+        /// <summary>
+        /// Use to initialize starting state for current state machine.
+        /// </summary>
+        /// <returns></returns>
         protected virtual StateBase GetInitialState()
         {
             return null;

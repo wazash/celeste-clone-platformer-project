@@ -1,16 +1,14 @@
 ﻿using Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
 {
+    /// <summary>
+    /// A substate of the WallGrabbed state. Player is idling on wall
+    /// </summary>
     public class WallGrabIdling : WallGrabbed
     {
-        private const string NAME = "WallGrabIdling";
+        private const string NAME = "WallGrabIdling";   // State AND animation name
         public WallGrabIdling(PlayerSM stateMachine) : base(stateMachine, NAME)
         {
         }
@@ -19,10 +17,10 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
         {
             base.Enter();
 
-            sm.Animator.Play(NAME);
+            sm.Animator.Play(NAME);     // Play WallGrabIdling animation from player Aniomator
 
-            sm.Rigidbody.velocity = Vector2.zero;
-            sm.Rigidbody.gravityScale = 0;
+            sm.Rigidbody.velocity = Vector2.zero;   // Set player velocity to zero when enter to state
+            sm.Rigidbody.gravityScale = 0;          // Set player gravity to zero when enter to state
         }
 
         public override void Exit()
@@ -34,15 +32,23 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
         {
             base.UpdateLogic();
 
-            if(input.y < 0)
+            #region Logic
+
+            #endregion
+
+            #region Change State
+
+            if (input.y < 0)
             {
-                stateMachine.ChangeState(sm.WallGrabSlidingState);
+                stateMachine.ChangeState(sm.WallGrabSlidingState);  // Change state to wall sliding if vertical input is lesser then 0
             }
 
-            if(input.y > 0)
+            if (input.y > 0)
             {
-                stateMachine.ChangeState(sm.WallGrabClimbingState);
-            }
+                stateMachine.ChangeState(sm.WallGrabClimbingState); // Change state to wall climbing if vertical input is greater then 0
+            } 
+
+            #endregion
 
         }
 
@@ -51,6 +57,8 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
             base.UpdatePhysics();
         }
 
+        #region Own Methods
 
+        #endregion
     }
 }

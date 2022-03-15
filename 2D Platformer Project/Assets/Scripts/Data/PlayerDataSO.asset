@@ -19,7 +19,7 @@ MonoBehaviour:
   JumpForce: 8
   WallJumpUpMiltiplier: 0.21
   DefaultGravityScale: 3
-  SlidingGravityFactor: 2.25
+  SlidingGravityFactor: 0.35
   ClimbingGravityFactor: 3
   Stamina: 5
   ChangePositionOffset: {x: 0.4, y: 0.68}

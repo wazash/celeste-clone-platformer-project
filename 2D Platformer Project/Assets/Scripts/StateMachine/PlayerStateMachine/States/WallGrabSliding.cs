@@ -1,16 +1,13 @@
 ﻿using Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
 {
+    /// <summary>
+    /// A substate of the WallGrabbed state. Player is sliding down on wall
+    /// </summary>
     public class WallGrabSliding : WallGrabbed
     {
-        private const string NAME = "WallGrabSliding";
+        private const string NAME = "WallGrabSliding";  // State AND animation name
         public WallGrabSliding(PlayerSM stateMachine) : base(stateMachine, NAME)
         {
         }
@@ -19,9 +16,11 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
         {
             base.Enter();
 
-            sm.Animator.Play(NAME);
+            sm.Animator.Play(NAME);     // Play WallGrabSliding animation from player Aniomator
 
-            sm.Rigidbody.gravityScale = sm.PlayerData.DefaultGravityScale / sm.PlayerData.SlidingGravityFactor;
+            //  Set player gravity to default gravity multiply by wall sliding factor.
+            // Thats mean sliding will be faster the higher value of factor is set in PlayerDataSO.
+            sm.Rigidbody.gravityScale = sm.PlayerData.DefaultGravityScale * sm.PlayerData.SlidingGravityFactor; 
         }
 
         public override void Exit()
@@ -33,15 +32,23 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
         {
             base.UpdateLogic();
 
-            if(input.y == 0)
+            #region Logic
+
+            #endregion
+
+            #region Change State
+
+            if (input.y == 0)
             {
-                stateMachine.ChangeState(sm.WallGrabIdlingState);
+                stateMachine.ChangeState(sm.WallGrabIdlingState);   // Change state into idling on wall when vertical input is 0
             }
 
-            if(input.y > 1)
+            if (input.y > 1)
             {
-                stateMachine.ChangeState(sm.WallGrabClimbingState);
-            }
+                stateMachine.ChangeState(sm.WallGrabClimbingState); // Change state into idling on wall when vertical input is egative
+            } 
+
+            #endregion
 
         }
 
@@ -49,5 +56,9 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
         {
             base.UpdatePhysics();
         }
+
+        #region Own Methods
+
+        #endregion
     }
 }

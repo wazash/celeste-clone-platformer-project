@@ -1,11 +1,13 @@
 using Cinemachine;
 using UnityEngine;
 
-public class RoomsCameraTransition : MonoBehaviour
+/// <summary>
+/// Changing active Virtual Camera while crossing room.
+/// </summary>
+public class RoomsVirtualCameraChanging : MonoBehaviour
 {
     [SerializeField]
     private CinemachineVirtualCamera virtualCamera;
-    private CinemachineConfiner confiner;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {   
