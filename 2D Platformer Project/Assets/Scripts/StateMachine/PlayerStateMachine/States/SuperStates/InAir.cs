@@ -64,7 +64,6 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates
             base.UpdatePhysics();
         }
 
-
         #region Own Methods
 
         #endregion

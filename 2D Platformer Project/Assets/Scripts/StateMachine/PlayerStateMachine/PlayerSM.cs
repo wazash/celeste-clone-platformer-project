@@ -17,12 +17,22 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
         public Animator Animator { get; private set; }
         #endregion
 
+        public float CoyoteJumpTimer { get; set; }
+        [field:SerializeField]
+        public float JumpBufferTimer { get; set; }
+
+        public float ExitVelocityY { get; set; }
+
         #region Particles
+
         [field: Header("Particles")]
         [field: SerializeField]
         public ParticleSystem FootDustPS { get; private set; }
         [field: SerializeField]
         public ParticleSystem JumpedDust { get; private set; }
+        [field:SerializeField]
+        public ParticleSystem LandingDust { get; private set; }
+
         #endregion
 
         #region Checkers
@@ -95,6 +105,9 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
         protected override void Update()
         {
             base.Update();
+
+            // Global jump buffer counter
+            JumpBufferTimer -= Time.deltaTime;
         }
 
         protected override void FixedUpdate()

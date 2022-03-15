@@ -17,12 +17,16 @@ MonoBehaviour:
   DecelerationFactor: 0.6
   IsFacingRight: 1
   JumpForce: 8
+  CoyoteJumpForce: 8
+  CoyoteTime: 0.1
+  JumpBufferTime: 0.1
   WallJumpUpMiltiplier: 0.21
+  FallingSpeedRequiredToPlayLandingParticle: -10
   DefaultGravityScale: 3
   SlidingGravityFactor: 0.35
   ClimbingGravityFactor: 3
   Stamina: 5
-  ChangePositionOffset: {x: 0.4, y: 0.68}
+  ChangePositionOffset: {x: 0.4, y: 0.65}
   HorizontalAxis: 0
   VerticalAxis: 1
   JumpAxis: 2

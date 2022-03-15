@@ -42,6 +42,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates
             #endregion
 
             #region Change State
+
             // Change states conditions
             if (Input.GetButtonUp(sm.PlayerData.GrabWallAxis.ToString())        // If grabwall button is released and ...
                 && sm.currentState.Name != sm.WallGrabCornerClimbingState.Name  //... current substate is not WallGrabCornerClimbing or
@@ -61,6 +62,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates
             {
                 stateMachine.ChangeState(sm.WallGrabCornerClimbingState);   // Change state to climbing corner if is in proper position and proper input is get 
             } 
+
             #endregion
         }
 
@@ -77,23 +79,40 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates
         /// </summary>
         private void WallJump()
         {
-            sm.Rigidbody.velocity = Vector2.zero; // Zeroed velocity before jump for prevent incorrect force
-
-            if (input.y >= 0 && input.x == 0)
-            {
-                // If not pressed any input or just vertical positive then jump up near wall
-                sm.Rigidbody.AddForce(sm.PlayerData.JumpForce * sm.PlayerData.WallJumpUpMiltiplier * Vector2.one, ForceMode2D.Impulse);
-            }
+            #region jump up but broken
+            //if (input.y >= 0 && input.x == 0)
+            //{
+            //    // If not pressed any input or just vertical positive then jump up near wall
+            //    if (sm.transform.localScale.x < 0)
+            //    {
+            //        sm.Rigidbody.AddForce(sm.PlayerData.JumpForce * Vector2.right, ForceMode2D.Impulse);
+            //        sm.Rigidbody.AddForce(sm.PlayerData.JumpForce * sm.PlayerData.WallJumpUpMiltiplier * Vector2.one, ForceMode2D.Impulse);
+            //    }
+            //    if (sm.transform.localScale.x > 0)
+            //    {
+            //        sm.Rigidbody.AddForce(sm.PlayerData.JumpForce * Vector2.left, ForceMode2D.Impulse);
+            //        sm.Rigidbody.AddForce(sm.PlayerData.JumpForce * sm.PlayerData.WallJumpUpMiltiplier * Vector2.one, ForceMode2D.Impulse);
+            //    }
+            //} 
+            #endregion
 
             if (sm.transform.localScale.x < 0)
             {
-                // If grabbed left wall then jump into right-up side
-                sm.Rigidbody.AddForce(sm.PlayerData.JumpForce * Vector2.one, ForceMode2D.Impulse);
+                // If grabbed left wall then jump into right side
+                if(input.x > 0)
+                {
+                    sm.Rigidbody.velocity = Vector2.zero; // Zeroed velocity before jump for prevent incorrect force
+                    sm.Rigidbody.AddForce(sm.PlayerData.JumpForce * Vector2.one, ForceMode2D.Impulse);
+                }
             }
             else
             {
-                // If grabbed right wall then jump into left-up side
-                sm.Rigidbody.AddForce(sm.PlayerData.JumpForce * new Vector2(-1, 1), ForceMode2D.Impulse);
+                // If grabbed right wall then jump into left side
+                if(input.x < 0)
+                {
+                    sm.Rigidbody.velocity = Vector2.zero; // Zeroed velocity before jump for prevent incorrect force
+                    sm.Rigidbody.AddForce(sm.PlayerData.JumpForce * new Vector2(-1, 1), ForceMode2D.Impulse);
+                }
             }
         } 
 

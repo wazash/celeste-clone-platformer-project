@@ -19,6 +19,16 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.PlayerStates.SuperState
         public override void Enter()
         {
             base.Enter();
+
+            if(sm.ExitVelocityY < sm.PlayerData.FallingSpeedRequiredToPlayLandingParticle)
+            {
+                PlayLandingParticleEffects();   // Playing landing particle effects if condition is fulfilled
+                sm.ExitVelocityY = 0;
+            }
+     
+
+            // Reset coyote timer when grounded
+            sm.CoyoteJumpTimer = sm.PlayerData.CoyoteTime;
         }
 
         public override void Exit()
@@ -31,14 +41,21 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.PlayerStates.SuperState
             base.UpdateLogic();
 
             #region Logic 
+
             // Get input
             input = new Vector2(Input.GetAxisRaw(sm.PlayerData.HorizontalAxis.ToString()), Input.GetAxisRaw(sm.PlayerData.VerticalAxis.ToString()));
 
             // Flip player while in any of grounded state
             sm.FlipDirection(input);
 
-            // Make jump
-            JumpWhileGrounded(); 
+            //// Make jump when buffer timer is above zero or jump button iis pressed
+            if(sm.JumpBufferTimer > Mathf.Epsilon || Input.GetButtonDown(sm.PlayerData.JumpAxis.ToString()))
+            {
+                JumpWhileGrounded();    // Jump
+                //sm.JumpBufferTimer = 0; // Zeroing buffer timer
+            }
+
+
             #endregion
 
             #region Chage State
@@ -68,12 +85,19 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.PlayerStates.SuperState
 
         private void JumpWhileGrounded()
         {
-            if (Input.GetButtonDown(sm.PlayerData.JumpAxis.ToString()))
-            {
-                sm.JumpedDust.Play();   // Play Jumping Dust while player pressed Jump Button
-                sm.Rigidbody.AddForce(Vector2.up * sm.PlayerData.JumpForce, ForceMode2D.Impulse);   // Add vertical force for make player jump
-            }
+            sm.JumpedDust.Play();   // Play Jumping Dust while player pressed Jump Button
+            sm.Rigidbody.velocity = Vector2.zero;   // Reset player velocity before jump
+            sm.Rigidbody.AddForce(Vector2.up * sm.PlayerData.JumpForce, ForceMode2D.Impulse);   // Add vertical force for make player jump  
         }
+
+        /// <summary>
+        /// Play landing particles if falling speed is enough
+        /// </summary>
+        private void PlayLandingParticleEffects()
+        {
+            sm.LandingDust.Play();
+        }
+
         #endregion
     }
 }
