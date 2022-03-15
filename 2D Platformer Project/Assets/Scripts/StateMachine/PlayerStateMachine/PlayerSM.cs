@@ -18,7 +18,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
         #endregion
 
         public float CoyoteJumpTimer { get; set; }
-        [field:SerializeField]
+
         public float JumpBufferTimer { get; set; }
 
         public float ExitVelocityY { get; set; }

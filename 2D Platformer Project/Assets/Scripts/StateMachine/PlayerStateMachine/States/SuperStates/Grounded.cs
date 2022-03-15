@@ -20,6 +20,8 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.PlayerStates.SuperState
         {
             base.Enter();
 
+            Debug.Log(sm.ExitVelocityY);
+
             if(sm.ExitVelocityY < sm.PlayerData.FallingSpeedRequiredToPlayLandingParticle)
             {
                 PlayLandingParticleEffects();   // Playing landing particle effects if condition is fulfilled

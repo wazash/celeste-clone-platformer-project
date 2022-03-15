@@ -8,6 +8,7 @@ namespace Assets.Scripts.Data
         [Header("Moving data")]
         public float Speed = 5.0f;
         public float MinVelocityX = 0.01f;
+        [Range(-14f, -5f)] // If less then -14 some issues with capturing exit falling velcity
         public float MinVelocityY = -14.0f;
         [Range(0f, 1f)]
         public float DecelerationFactor = 1.0f;

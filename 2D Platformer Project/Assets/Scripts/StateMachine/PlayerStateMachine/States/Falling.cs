@@ -25,7 +25,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
         {
             base.Exit();
 
-            sm.ExitVelocityY = sm.Rigidbody.velocity.y;
+            sm.ExitVelocityY = sm.Rigidbody.velocity.y; // Save exit vertical velocity
         }
 
         public override void UpdateLogic()
