@@ -17,6 +17,8 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
         public Animator Animator { get; private set; }
         #endregion
 
+        public bool CanPlayerControll { get; private set; } = true;
+
         public float CoyoteJumpTimer { get; set; }
 
         public float JumpBufferTimer { get; set; }
@@ -99,12 +101,14 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
 
         protected override void Start()
         {
-            base.Start();
+            if(CanPlayerControll)
+                base.Start();
         }
 
         protected override void Update()
         {
-            base.Update();
+            if(CanPlayerControll)
+                base.Update();
 
             // Global jump buffer counter
             JumpBufferTimer -= Time.deltaTime;
@@ -112,10 +116,9 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
 
         protected override void FixedUpdate()
         {
-            base.FixedUpdate();
+            if(CanPlayerControll)
+                base.FixedUpdate();
         }
-
-
         #endregion
 
 
@@ -165,6 +168,17 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
                 PlayerData.IsFacingRight = true;
                 transform.localScale = new Vector3(1, 1, 1);
             }
+        }
+
+        public void StopPlayer()
+        {
+            CanPlayerControll = false;
+            Rigidbody.velocity = Vector2.zero;
+        }
+
+        public void StartPlayer()
+        {
+            CanPlayerControll = true;
         }
 
         private void OnDrawGizmos()

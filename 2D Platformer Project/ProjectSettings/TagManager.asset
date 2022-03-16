@@ -12,8 +12,8 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
-  - 
+  - Gates
+  - Collectibles
   - 
   - 
   - 
@@ -46,6 +46,9 @@ TagManager:
     locked: 0
   - name: Ground
     uniqueID: 713979177
+    locked: 0
+  - name: Collectibles
+    uniqueID: 4115397633
     locked: 0
   - name: Player
     uniqueID: 1315679417
