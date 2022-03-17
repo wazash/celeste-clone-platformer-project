@@ -1,5 +1,8 @@
-﻿using Assets.Scripts.Data;
+﻿using Assets.Scripts.Data.Player;
 using Assets.Scripts.StateMachine.PlayerStateMachine.States;
+using DG.Tweening;
+using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Assets.Scripts.StateMachine.PlayerStateMachine
@@ -15,6 +18,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
         public PlayerData PlayerData { get; private set; }
         [field: SerializeField]
         public Animator Animator { get; private set; }
+        private SpriteRenderer spriteRenderer;
         #endregion
 
         public bool CanPlayerControll { get; private set; } = true;
@@ -25,6 +29,10 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
 
         public float ExitVelocityY { get; set; }
 
+        [SerializeField]
+        private FloatVariable backgroundAnimationTime;
+        public float backgroundAnimationTimeOffset = 0.2f;
+
         #region Particles
 
         [field: Header("Particles")]
@@ -32,8 +40,12 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
         public ParticleSystem FootDustPS { get; private set; }
         [field: SerializeField]
         public ParticleSystem JumpedDust { get; private set; }
-        [field:SerializeField]
+        [field: SerializeField]
         public ParticleSystem LandingDust { get; private set; }
+        [field: SerializeField]
+        public ParticleSystem DeathParticle { get; private set; }
+        [field: SerializeField]
+        public ParticleSystem SpawnParticle { get; private set; }
 
         #endregion
 
@@ -72,8 +84,10 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
         public WallGrabIdling WallGrabIdlingState { get; private set; }
         public WallGrabSliding WallGrabSlidingState { get; private set; }
         public WallGrabClimbing WallGrabClimbingState { get; private set; }
-        public WallGrabCornerClimbing WallGrabCornerClimbingState { get; private set; } 
+        public WallGrabCornerClimbing WallGrabCornerClimbingState { get; private set; }
         #endregion
+
+        public static Action OnPlayerDeath;
 
         private void Awake()
         {
@@ -87,7 +101,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
             // WallGrabbed States
             WallGrabIdlingState = new WallGrabIdling(this);
             WallGrabSlidingState = new WallGrabSliding(this);
-            WallGrabClimbingState = new WallGrabClimbing(this); 
+            WallGrabClimbingState = new WallGrabClimbing(this);
             WallGrabCornerClimbingState = new WallGrabCornerClimbing(this);
             #endregion
         }
@@ -101,14 +115,14 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
 
         protected override void Start()
         {
-            if(CanPlayerControll)
-                base.Start();
+            spriteRenderer = GetComponent<SpriteRenderer>();
+
+            base.Start();
         }
 
         protected override void Update()
         {
-            if(CanPlayerControll)
-                base.Update();
+            base.Update();
 
             // Global jump buffer counter
             JumpBufferTimer -= Time.deltaTime;
@@ -116,8 +130,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
 
         protected override void FixedUpdate()
         {
-            if(CanPlayerControll)
-                base.FixedUpdate();
+            base.FixedUpdate();
         }
         #endregion
 
@@ -170,17 +183,69 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
             }
         }
 
+        /// <summary>
+        /// Disable player controlls and stop his velocity
+        /// </summary>
         public void StopPlayer()
         {
             CanPlayerControll = false;
             Rigidbody.velocity = Vector2.zero;
         }
 
+        /// <summary>
+        ///  Enable player controlls
+        /// </summary>
         public void StartPlayer()
         {
             CanPlayerControll = true;
         }
 
+        /// <summary>
+        /// Set player position at current spawn point position and play spawning particles
+        /// </summary>
+        private void RespawnPlayer()
+        {
+            transform.position = PlayerData.CurrentSpawnPoint.position;
+            SpawnParticle.Play();
+        }
+
+        public void DeathSequence()
+        {
+            StopPlayer();
+            Rigidbody.gravityScale = 0;
+            Vector3 currentScale = transform.localScale;
+
+            StartCoroutine(Death(PlayerData.TimeAfterDeath, PlayerData.TimeBeforeSpawn, currentScale));
+
+        }
+
+        /// <summary>
+        /// Start player death sequence includin respawning
+        /// </summary>
+        /// <param name="timeAfterDeath"></param>
+        /// <param name="timeBeforeSpawn"></param>
+        /// <param name="currentScale"></param>
+        /// <returns></returns>
+        private IEnumerator Death(float timeAfterDeath, float timeBeforeSpawn, Vector3 currentScale)
+        {
+            transform.DOScale(0, 0.25f).OnComplete(() => DeathParticle.Play());
+
+            yield return new WaitForSeconds(PlayerData.DyingAnimationTime);
+
+            OnPlayerDeath?.Invoke();
+            yield return new WaitForSeconds(backgroundAnimationTime.value + backgroundAnimationTimeOffset);
+
+            RespawnPlayer();
+
+            yield return new WaitForSeconds(timeBeforeSpawn);
+
+            transform.DOScale(currentScale, 0.20f).OnComplete(() =>
+            {
+                Rigidbody.gravityScale = PlayerData.DefaultGravityScale;
+                StartPlayer();
+            });
+
+        }
         private void OnDrawGizmos()
         {
             // Ground Checker

@@ -52,7 +52,8 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
         {
             base.UpdatePhysics();
 
-            RunWhileGrounded();
+            if (sm.CanPlayerControll)
+                RunWhileGrounded();
 
         }
         #endregion

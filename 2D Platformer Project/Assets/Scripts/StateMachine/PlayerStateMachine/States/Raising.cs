@@ -48,7 +48,8 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
         {
             base.UpdatePhysics();
 
-            MoveWhileRaising();     // Move player while raising (seperate from falling movement)
+            if(sm.CanPlayerControll)
+                MoveWhileRaising();     // Move player while raising (seperate from falling movement)
         }
 
         #region Own Methods

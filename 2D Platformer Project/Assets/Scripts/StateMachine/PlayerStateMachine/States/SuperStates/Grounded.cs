@@ -26,7 +26,6 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.PlayerStates.SuperState
                 sm.ExitVelocityY = 0;
             }
      
-
             // Reset coyote timer when grounded
             sm.CoyoteJumpTimer = sm.PlayerData.CoyoteTime;
         }
@@ -42,8 +41,9 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.PlayerStates.SuperState
 
             #region Logic 
 
-            // Get input
-            input = new Vector2(Input.GetAxisRaw(sm.PlayerData.HorizontalAxis.ToString()), Input.GetAxisRaw(sm.PlayerData.VerticalAxis.ToString()));
+            // Get input is controlling is avaliable
+            if (sm.CanPlayerControll)
+                input = new Vector2(Input.GetAxisRaw(sm.PlayerData.HorizontalAxis.ToString()), Input.GetAxisRaw(sm.PlayerData.VerticalAxis.ToString()));
 
             // Flip player while in any of grounded state
             sm.FlipDirection(input);

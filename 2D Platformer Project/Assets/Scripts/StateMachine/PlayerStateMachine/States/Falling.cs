@@ -64,7 +64,8 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
                 sm.Rigidbody.velocity = new Vector2(sm.Rigidbody.velocity.x, sm.PlayerData.MinVelocityY);
 
             // Move player while falling (seperate from raising movement)
-            MoveWhileFalling(); 
+            if(sm.CanPlayerControll)
+                MoveWhileFalling(); 
         }
 
         #region Own Methods

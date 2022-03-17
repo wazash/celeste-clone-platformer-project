@@ -1,14 +1,20 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Data
+namespace Assets.Scripts.Data.Player
 {
     [CreateAssetMenu(fileName = "Player Data", menuName = "Data/Player/Data")]
     public class PlayerData : ScriptableObject
     {
+        [Header("Death and spawn")]
+        public Transform CurrentSpawnPoint;
+        public float DyingAnimationTime;
+        public float TimeAfterDeath;
+        public float TimeBeforeSpawn;
+
         [Header("Moving data")]
         public float Speed = 5.0f;
         public float MinVelocityX = 0.01f;
-        [Range(-14f, -5f)] // If less then -14 some issues with capturing exit falling velcity
+        [Range(-13f, -5f)] // If less then -13 some issues with capturing exit falling velcity
         public float MinVelocityY = -14.0f;
         [Range(0f, 1f)]
         public float DecelerationFactor = 1.0f;
@@ -47,6 +53,8 @@ namespace Assets.Scripts.Data
         private void OnEnable()
         {
             IsFacingRight = true;
+
+            CurrentSpawnPoint = null;
         }
     }
 

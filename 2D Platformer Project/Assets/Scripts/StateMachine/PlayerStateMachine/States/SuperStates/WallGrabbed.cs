@@ -18,6 +18,8 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates
         public override void Enter()
         {
             base.Enter();
+            
+            sm.ExitVelocityY = 0; // Reset exit Y velocity to prevent playing landing particles when enter this state directly form falling
         }
 
         public override void Exit()
@@ -37,7 +39,8 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates
 
             if (Input.GetButtonDown(sm.PlayerData.JumpAxis.ToString()))
             {
-                WallJump(); // When jump button pressed make wall jump
+                if (sm.CanPlayerControll)
+                    WallJump(); // When jump button pressed make wall jump
             } 
             #endregion
 
