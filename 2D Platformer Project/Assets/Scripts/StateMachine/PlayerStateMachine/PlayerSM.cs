@@ -15,7 +15,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
         [field: SerializeField]
         public Rigidbody2D Rigidbody { get; private set; }
         [field: SerializeField]
-        public PlayerData PlayerData { get; private set; }
+        public OldPlayerData PlayerData { get; private set; }
         [field: SerializeField]
         public Animator Animator { get; private set; }
         private SpriteRenderer spriteRenderer;

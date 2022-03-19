@@ -53,7 +53,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
             //    stateMachine.ChangeState(sm.WallGrabClimbingState); // Change state into idling on wall when vertical input is egative
             //} 
 
-            if (Input.GetButton(sm.PlayerData.GrabWallAxis.ToString()) && input.y >= 0)
+            if (Input.GetButton(sm.PlayerData.GrabWallAxis.ToString()) && input.y == 0)
             {
                 stateMachine.ChangeState(sm.WallGrabIdlingState);
             }

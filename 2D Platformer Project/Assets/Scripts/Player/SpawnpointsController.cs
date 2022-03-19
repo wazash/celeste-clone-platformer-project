@@ -4,7 +4,7 @@ using UnityEngine;
 public class SpawnpointsController : MonoBehaviour
 {
     [SerializeField]
-    private PlayerData playerData;
+    private OldPlayerData playerData;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
