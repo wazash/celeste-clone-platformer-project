@@ -41,7 +41,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates
             // Change states conditions
             if (sm.CheckGrounded())
             {
-                if (input.x == 0)
+                if (/*input.x == 0*/ sm.Rigidbody.velocity.x == 0)
                     stateMachine.ChangeState(sm.IdlingState);   // If grounded and horizontal veocity is equal to 0 set Idling state
                 if (input.x != 0)
                     stateMachine.ChangeState(sm.RuningState);   // If grounded and horizontal veocity is not equal to 0 set Runing state

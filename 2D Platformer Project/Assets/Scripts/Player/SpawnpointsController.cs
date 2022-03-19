@@ -1,7 +1,4 @@
 using Assets.Scripts.Data.Player;
-using Assets.Scripts.StateMachine.PlayerStateMachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnpointsController : MonoBehaviour

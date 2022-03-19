@@ -32,6 +32,11 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
 
             #region Logic
 
+            if (!Input.GetButton(sm.PlayerData.JumpAxis.ToString()))
+            {
+                sm.Rigidbody.velocity = new Vector2(sm.Rigidbody.velocity.x, sm.Rigidbody.velocity.y * sm.PlayerData.CancelJumpFactor);
+            }
+
             #endregion
 
             #region Chage State

@@ -38,15 +38,30 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
 
             #region Change State
 
-            if (input.y < 0)
+            //if (input.y <= 0)
+            //{
+            //    stateMachine.ChangeState(sm.WallGrabSlidingState);  // Change state to wall sliding if vertical input is lesser then 0
+            //}
+
+            //if (input.y > 0)
+            //{
+            //    stateMachine.ChangeState(sm.WallGrabClimbingState); // Change state to wall climbing if vertical input is greater then 0
+            //} 
+
+            if (Input.GetButtonUp(sm.PlayerData.GrabWallAxis.ToString()) && input.x == 0)
             {
-                stateMachine.ChangeState(sm.WallGrabSlidingState);  // Change state to wall sliding if vertical input is lesser then 0
+                stateMachine.ChangeState(sm.FallingState);
             }
 
             if (input.y > 0)
             {
-                stateMachine.ChangeState(sm.WallGrabClimbingState); // Change state to wall climbing if vertical input is greater then 0
-            } 
+                stateMachine.ChangeState(sm.WallGrabClimbingState);
+            }
+
+            if(Input.GetButtonUp(sm.PlayerData.GrabWallAxis.ToString()) || input.y < 0)
+            {
+                stateMachine.ChangeState(sm.WallGrabSlidingState);
+            }
 
             #endregion
 

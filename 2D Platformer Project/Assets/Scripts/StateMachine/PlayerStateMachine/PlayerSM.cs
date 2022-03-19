@@ -106,6 +106,17 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
             #endregion
         }
 
+        #region OnEnable / OnDisable
+        private void OnEnable()
+        {
+            EventsManager.OnPlayerControllPossibilityChanged.AddListener(StopPlayer);
+        }
+        private void OnDisable()
+        {
+            EventsManager.OnPlayerControllPossibilityChanged?.RemoveListener(StopPlayer);
+        } 
+        #endregion
+
         #region Overrided Methods
         // Initialization start state
         protected override StateBase GetInitialState()
@@ -186,19 +197,21 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
         /// <summary>
         /// Disable player controlls and stop his velocity
         /// </summary>
-        public void StopPlayer()
+        public void StopPlayer(bool value)
         {
-            CanPlayerControll = false;
+            CanPlayerControll = value;
             Rigidbody.velocity = Vector2.zero;
-        }
+        }        
+        
 
         /// <summary>
         ///  Enable player controlls
         /// </summary>
-        public void StartPlayer()
+        public void StartPlayer(bool value)
         {
-            CanPlayerControll = true;
+            CanPlayerControll = value;
         }
+        
 
         /// <summary>
         /// Set player position at current spawn point position and play spawning particles
@@ -211,10 +224,14 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
 
         public void DeathSequence()
         {
-            StopPlayer();
-            Rigidbody.gravityScale = 0;
-            Vector3 currentScale = transform.localScale;
+            StopPlayer(false);
 
+            //transform.position = new Vector3(transform.position.x, transform.position.y + transform.lossyScale.y, transform.position.z);
+            Rigidbody.gravityScale = 0;
+
+            //Vector3 currentScale = transform.localScale;
+            var currentScale = PlayerData.IsFacingRight ? 1 : -1;
+                
             StartCoroutine(Death(PlayerData.TimeAfterDeath, PlayerData.TimeBeforeSpawn, currentScale));
 
         }
@@ -226,23 +243,24 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine
         /// <param name="timeBeforeSpawn"></param>
         /// <param name="currentScale"></param>
         /// <returns></returns>
-        private IEnumerator Death(float timeAfterDeath, float timeBeforeSpawn, Vector3 currentScale)
+        private IEnumerator Death(float timeAfterDeath, float timeBeforeSpawn, float currentScale)
         {
             transform.DOScale(0, 0.25f).OnComplete(() => DeathParticle.Play());
 
             yield return new WaitForSeconds(PlayerData.DyingAnimationTime);
 
-            OnPlayerDeath?.Invoke();
+            //OnPlayerDeath?.Invoke();
+            EventsManager.OnPlayerDeath.Invoke();
             yield return new WaitForSeconds(backgroundAnimationTime.value + backgroundAnimationTimeOffset);
 
             RespawnPlayer();
 
             yield return new WaitForSeconds(timeBeforeSpawn);
 
-            transform.DOScale(currentScale, 0.20f).OnComplete(() =>
+            transform.DOScale(new Vector3(currentScale, 1, 1), 0.20f).OnComplete(() =>
             {
                 Rigidbody.gravityScale = PlayerData.DefaultGravityScale;
-                StartPlayer();
+                StartPlayer(true);
             });
 
         }

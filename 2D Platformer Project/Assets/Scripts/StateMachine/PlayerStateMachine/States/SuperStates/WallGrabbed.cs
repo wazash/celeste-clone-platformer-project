@@ -26,7 +26,8 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates
         {
             base.Exit();
 
-            sm.Rigidbody.gravityScale = sm.PlayerData.DefaultGravityScale;  // When exit state set player gravity to default value
+            if(sm.CanPlayerControll) // While dying, controlls are disabled, cant set gravity to default because it causes 'double-death' bug
+                sm.Rigidbody.gravityScale = sm.PlayerData.DefaultGravityScale;  // When exit state set player gravity to default value
         }
 
         public override void UpdateLogic()
@@ -34,6 +35,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates
             base.UpdateLogic();
 
             #region Logic
+
             // Get input
             input = new Vector2(Input.GetAxisRaw(sm.PlayerData.HorizontalAxis.ToString()), Input.GetAxisRaw(sm.PlayerData.VerticalAxis.ToString()));
 
@@ -41,7 +43,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates
             {
                 if (sm.CanPlayerControll)
                     WallJump(); // When jump button pressed make wall jump
-            } 
+            }
             #endregion
 
             #region Change State
@@ -57,9 +59,11 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States.SuperStates
                 }
                 else
                 {
-                    stateMachine.ChangeState(sm.FallingState);  // Change state to Falling if in air
+                   stateMachine.ChangeState(sm.FallingState);  // Change state to Falling if in air
                 }
             }
+
+
 
             if (sm.CheckCanCornerGrab() && (input.y > 0 || Mathf.Abs(input.x) > 0))
             {

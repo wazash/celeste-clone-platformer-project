@@ -1,36 +1,71 @@
-using Assets.Scripts.StateMachine.PlayerStateMachine;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
 
 public class PillarGateBehaviour : MonoBehaviour
 {
+    [Header("Doors Info")]
     [SerializeField]
-    private float duration;
+    private int DoorsID;
     [SerializeField]
-    private float position;
+    private Vector3 newDoorPosition;
     [SerializeField]
-    private Transform gate;
+    private bool shouldCameraMove;
 
-    private CinemachineVirtualCamera cam;
+    [Header("Animation")]
+    [SerializeField]
+    private float moveDuration;
+    [SerializeField]
+    private float shakeDuration = 1f;
+    private float shakeStrength = 0.05f;
+    private int shakeVibratio = 20;
+
+    private Transform gateVisualTransform;
+    private CinemachineVirtualCamera doorsVirtualCamera;
 
     private void Start()
     {
-        cam = GetComponentInChildren<CinemachineVirtualCamera>();
+        // Get components
+        doorsVirtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
+        gateVisualTransform = GetComponentInChildren<BoxCollider2D>().gameObject.transform;
     }
 
-    public void OpenInAxisY()
+    // Subscribe and unsubscribe events
+    private void OnEnable()
     {
-        cam.Priority = 11;
-        PlayerSM player = FindObjectOfType<PlayerSM>();
-        player.StopPlayer();
-        gate.DOShakePosition(1, strength: .05f, vibrato: 20).OnComplete(() => {
-            gate.DOMoveY(transform.position.y + position, duration).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => {
-                cam.Priority = 9;
-                player.StartPlayer();
-            });
-        });
-      
-        
+        EventsManager.OnKeyCollected.AddListener(RaisePillarDoors);
+    }
+    private void OnDisable()
+    {
+        EventsManager.OnKeyCollected?.RemoveListener(RaisePillarDoors);
+    }
+
+    private void RaisePillarDoors(int id)
+    {
+        if (DoorsID == id)
+        {
+            EventsManager.OnPillarDoorsStarted.Invoke(); // Default starting event
+
+            if (shouldCameraMove)
+            {
+                EventsManager.OnCameraPriorityChanged.Invoke(doorsVirtualCamera, 11);   // Make camera move to doors
+                EventsManager.OnPlayerControllPossibilityChanged.Invoke(false); // Prevent player movement
+            }
+
+            gateVisualTransform.DOShakePosition(shakeDuration, strength: shakeStrength, vibrato: shakeVibratio).OnComplete(() =>
+            {
+                EventsManager.OnPillarDoorsShakeEnded.Invoke(); // Default shake end event
+                gateVisualTransform.DOMove(newDoorPosition, moveDuration).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() =>
+               {
+                   EventsManager.OnPillarDoorsMoveEnded.Invoke();   // Default move end event
+
+                   if (shouldCameraMove)
+                   {
+                       EventsManager.OnCameraPriorityChanged.Invoke(doorsVirtualCamera, 9); // Make camera back
+                       EventsManager.OnPlayerControllPossibilityChanged.Invoke(true);   // Make player possibility to move
+                   }
+               });
+            }); 
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace Assets.Scripts.StateMachine
         /// <summary>
         /// Executes the code once when entering the state
         /// </summary>
-        public virtual void Enter() { }
+        public virtual void Enter() { Debug.Log(Name); }
         /// <summary>
         /// Executes the code every Update() (logic calculation)
         /// </summary>

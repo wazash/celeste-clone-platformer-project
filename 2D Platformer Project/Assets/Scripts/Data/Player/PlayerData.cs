@@ -32,14 +32,18 @@ namespace Assets.Scripts.Data.Player
         public float WallJumpUpMiltiplier;
         [Range(-100, 0)]
         public float FallingSpeedRequiredToPlayLandingParticle;
+        [Range(0.9f, 1f)]
+        public float CancelJumpFactor;
 
         [Header("Walling data")]
         [Range(0f, 5f)]
         public float DefaultGravityScale = 2f;
         [Range(0f, 1f)]
         public float SlidingGravityFactor = 2f;
+        //[Range(0f, 5f)]
+        //public float ClimbingGravityFactor = 2f;
         [Range(0f, 5f)]
-        public float ClimbingGravityFactor = 2f;
+        public float ClimbingSpeed = 2f;
         public float Stamina = 5f;
         public Vector2 ChangePositionOffset;
 

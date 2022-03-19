@@ -1,7 +1,7 @@
 using Cinemachine;
 using UnityEngine;
 
-public class ControllTimeBetweenRoomChange : MonoBehaviour
+public class BlendingCamerasTimeScaleManager : MonoBehaviour
 {
     private CinemachineBrain brainCM;
 

@@ -21,7 +21,9 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
 
             // Set player gravity to negative default gravity multiply by wall sliding factor.
             // Thats mean climbing will be faster the higher value of factor is set in PlayerDataSO.
-            sm.Rigidbody.gravityScale = -sm.PlayerData.DefaultGravityScale / sm.PlayerData.ClimbingGravityFactor;
+            //sm.Rigidbody.gravityScale = -sm.PlayerData.DefaultGravityScale * sm.PlayerData.ClimbingGravityFactor;
+            if(sm.CanPlayerControll)
+                sm.Rigidbody.gravityScale = -sm.Rigidbody.gravityScale;
         }
 
         public override void Exit()
@@ -44,10 +46,10 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
                 stateMachine.ChangeState(sm.WallGrabIdlingState);
             }
 
-            if (input.y < 0)
-            {
-                stateMachine.ChangeState(sm.WallGrabSlidingState);
-            } 
+            //if (input.y < 0)
+            //{
+            //    stateMachine.ChangeState(sm.WallGrabSlidingState);
+            //} 
 
             #endregion
         }
@@ -55,6 +57,16 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
         public override void UpdatePhysics()
         {
             base.UpdatePhysics();
+
+            LimitClimbingSpeed();
+        }
+
+        public void LimitClimbingSpeed()
+        {
+            if (sm.Rigidbody.velocity.y > sm.PlayerData.ClimbingSpeed)
+            {
+                sm.Rigidbody.velocity = new Vector2(sm.Rigidbody.velocity.x, sm.PlayerData.ClimbingSpeed);
+            }
         }
     }
 }

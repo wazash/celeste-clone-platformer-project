@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7641444147704021401}
   - component: {fileID: 7641444147704021404}
   - component: {fileID: 7641444147704021407}
-  - component: {fileID: 7641444147704021406}
+  - component: {fileID: 549274015}
   m_Layer: 5
   m_Name: BackgroundRespawnAnimationImage
   m_TagString: Untagged
@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.14901961, g: 0.09019608, b: 0.07450981, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -70,13 +70,13 @@ MonoBehaviour:
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7641444147704021406
+--- !u!114 &549274015
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,5 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5d785cc84bec7947a235f32315fc938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundAnimationTime: {fileID: 11400000, guid: a5c1882406feabc48be8fb8e02b949cf, type: 2}
-  animType: 1
+  backgroundAnimationTime:
+    UseConstant: 0
+    ConstantValue: 0.5
+    Variable: {fileID: 11400000, guid: 390d83b8ec6c87542ab7ea77fe71cd1a, type: 2}
+  animType: 0

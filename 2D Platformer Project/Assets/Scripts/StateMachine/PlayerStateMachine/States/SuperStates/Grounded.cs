@@ -33,6 +33,8 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.PlayerStates.SuperState
         public override void Exit()
         {
             base.Exit();
+
+            input = Vector2.zero;
         }
 
         public override void UpdateLogic()

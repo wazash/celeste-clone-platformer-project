@@ -20,15 +20,17 @@ public class RespawnBackgroundAnimation : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerSM.OnPlayerDeath += PlayerDeathAnimation;
+        //PlayerSM.OnPlayerDeath += PlayerDeathAnimation;
+        EventsManager.OnPlayerDeath.AddListener(PlayerDeathAnimationBG);
     }
 
     private void OnDisable()
     {
-        PlayerSM.OnPlayerDeath -= PlayerDeathAnimation;
+        //PlayerSM.OnPlayerDeath -= PlayerDeathAnimation;
+        EventsManager.OnPlayerDeath.RemoveListener(PlayerDeathAnimationBG);
     }
 
-    public void PlayerDeathAnimation()
+    public void PlayerDeathAnimationBG()
     {
         switch (animType)
         {
@@ -44,7 +46,7 @@ public class RespawnBackgroundAnimation : MonoBehaviour
     private void LeftToRightThenRightToLeft()
     {
         respawnBG.fillMethod = Image.FillMethod.Horizontal;
-        DOTween.To(() => respawnBG.fillAmount, x => respawnBG.fillAmount = x, 1, backgroundAnimationTime.Value).SetLoops(2, LoopType.Yoyo);
+        respawnBG.DOFillAmount(1, backgroundAnimationTime.Value).SetLoops(2, LoopType.Yoyo);
     }
 
     private void LeftToRightThenLeftToRight()

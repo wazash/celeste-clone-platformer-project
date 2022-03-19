@@ -18,18 +18,18 @@ MonoBehaviour:
   TimeBeforeSpawn: 0.8
   Speed: 4.5
   MinVelocityX: 0.1
-  MinVelocityY: -13
+  MinVelocityY: -8
   DecelerationFactor: 0.6
-  IsFacingRight: 0
+  IsFacingRight: 1
   JumpForce: 8
   CoyoteJumpForce: 8
-  CoyoteTime: 0.07
+  CoyoteTime: 0.1
   JumpBufferTime: 0.1
   WallJumpUpMiltiplier: 1.33
   FallingSpeedRequiredToPlayLandingParticle: -10
   DefaultGravityScale: 3
-  SlidingGravityFactor: 0.35
-  ClimbingGravityFactor: 3
+  SlidingGravityFactor: 0.1
+  ClimbingSpeed: 2
   Stamina: 5
   ChangePositionOffset: {x: 0.4, y: 0.65}
   HorizontalAxis: 0

@@ -40,7 +40,7 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
 
             // Make Coyote Jump
             sm.CoyoteJumpTimer -= Time.deltaTime;
-            if (sm.CoyoteJumpTimer > 0 && sm.previousState.Name == sm.RuningState.Name)
+            if (sm.CoyoteJumpTimer > 0 && sm.previousState.Name == sm.RuningState.Name || sm.previousState.Name == sm.IdlingState.Name)
                 CoyoteJump();
 
             #endregion
@@ -51,7 +51,12 @@ namespace Assets.Scripts.StateMachine.PlayerStateMachine.States
             if (sm.Rigidbody.velocity.y > 0)
             {
                 stateMachine.ChangeState(sm.RaisingState);  
-            } 
+            }
+
+            if (sm.CheckCanGrabWall() && input.x != 0)
+            {
+                stateMachine.ChangeState(sm.WallGrabSlidingState);
+            }
 
             #endregion
         }
