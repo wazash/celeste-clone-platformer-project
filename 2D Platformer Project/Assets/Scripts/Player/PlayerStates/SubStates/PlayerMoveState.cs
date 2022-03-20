@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class PlayerMoveState : PlayerGroundedState
 {
-    public PlayerMoveState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animationName) : 
-        base(player, stateMachine, playerData, animationName)
+    public PlayerMoveState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animationBoolName) : 
+        base(player, stateMachine, playerData, animationBoolName)
     {
     }
 
@@ -33,7 +33,7 @@ public class PlayerMoveState : PlayerGroundedState
         player.CheckIfShouldFlip(xInput);
 
         // Move player
-        player.SetVelocityX(playerData.movementVelocity * xInput);
+        player.SetVelocityX(playerData.MovementVelocity * xInput);
 
         // Change state to IdleState
         if(xInput == 0)

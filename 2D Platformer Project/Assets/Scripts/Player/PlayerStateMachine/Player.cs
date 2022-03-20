@@ -9,6 +9,9 @@ public class Player : MonoBehaviour
 
     public PlayerIdleState IdleState { get; private set; }
     public PlayerMoveState MoveState { get; private set; }
+    public PlayerJumpState JumpState { get; private set; }
+    public PlayerInAirState InAirState { get; private set; }
+     
 
     [SerializeField]
     private PlayerData playerData;
@@ -18,6 +21,11 @@ public class Player : MonoBehaviour
     public Animator Animator { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
     public Rigidbody2D Rigidbody { get; private set; }
+    #endregion
+
+    #region Check variables
+    [SerializeField]
+    protected Transform groundCheck; 
     #endregion
 
     #region Other variables
@@ -36,8 +44,10 @@ public class Player : MonoBehaviour
         StateMachine = new PlayerStateMachine();
 
         //Create States
-        IdleState = new PlayerIdleState(this, StateMachine, playerData, "Idling");
-        MoveState = new PlayerMoveState(this, StateMachine, playerData, "Runing");
+        IdleState = new PlayerIdleState(this, StateMachine, playerData, AnimationName.Idling.ToString());
+        MoveState = new PlayerMoveState(this, StateMachine, playerData, AnimationName.Running.ToString());
+        JumpState = new PlayerJumpState(this, StateMachine, playerData, AnimationName.InAir.ToString());
+        InAirState = new PlayerInAirState(this, StateMachine, playerData, AnimationName.InAir.ToString());
     }
 
     private void Start()
@@ -70,6 +80,13 @@ public class Player : MonoBehaviour
 
 
     #region Set methods
+
+    public void SetVelocityY(float velocity)
+    {
+        workspace.Set(CurrentVelocity.x, velocity);
+        Rigidbody.velocity = workspace;
+        CurrentVelocity = workspace;
+    }
     public void SetVelocityX(float velocity)
     {
         workspace.Set(velocity, CurrentVelocity.y);
@@ -79,7 +96,10 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Check methods
-
+    public bool CheckIsGrounded()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, playerData.GroundCheckRadius, playerData.WhatIsGround);
+    }
     public void CheckIfShouldFlip(int xInput)
     {
         if (xInput != 0 && xInput != FacingDirection)
@@ -88,6 +108,11 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Other methods
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = CheckIsGrounded() ? Color.green : Color.red;
+        Gizmos.DrawWireSphere(groundCheck.position, playerData.GroundCheckRadius);
+    }
     private void Flip()
     {
         FacingDirection *= -1;
