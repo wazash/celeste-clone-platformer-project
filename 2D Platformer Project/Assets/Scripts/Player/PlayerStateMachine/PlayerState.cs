@@ -10,6 +10,7 @@ public class PlayerState
     protected float startTime;
 
     protected string animationBoolName;
+    protected bool isExitingState;
 
     public PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animationBoolName)
     {
@@ -22,16 +23,19 @@ public class PlayerState
     public virtual void Enter()
     {
         DoChecks();
-        player.Animator.SetBool(animationBoolName, true);
+        player.Animator.SetBool(animationBoolName, true); // Start playing animation
 
-        startTime = Time.time;
+        startTime = Time.time;  // Start counting enter time
 
-        Debug.Log(animationBoolName);
+        isExitingState = false;
+
+        //Debug.Log(animationBoolName);
     }
 
     public virtual void Exit()
     {
-        player.Animator.SetBool(animationBoolName, false);
+        player.Animator.SetBool(animationBoolName, false);  // Stop playing animation
+        isExitingState = true;
     }
 
     public virtual void LogicUpdate()
@@ -44,6 +48,9 @@ public class PlayerState
         DoChecks();
     }
 
+    /// <summary>
+    /// Make some checks (e.x. IsGrounded), executed in Enter and PhysicsUpdate
+    /// </summary>
     public virtual void DoChecks()
     {
 

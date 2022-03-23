@@ -8,9 +8,19 @@ public class PlayerInputHandler : MonoBehaviour
     public int NormalizedInputX { get; private set; }
     public int NormalizedInputY { get; private set; }
     public bool JumpInput { get; private set; }
+    public bool JumpInputStop { get; private set; }
+    public bool GrabWallInput { get; private set; }
 
     [SerializeField, Tooltip("Time, how long input will 'hold' true in jump input value after press jump button")]
     private float inputHoldTime = 0.2f;
+
+    [SerializeField, Tooltip("Using stick causes bug that while wall climbing cannot change direction, this defines " +
+        "threshold of value over which stick will be 'flatted' to whole value")]
+    private bool useThreshold = true;
+    [SerializeField]
+    [Range(0f, 1f)]
+    private float stickThreshold = .5f;
+
     private float jumpInputStartTime;
 
     private void Update()
@@ -23,10 +33,34 @@ public class PlayerInputHandler : MonoBehaviour
     {
         RawMovementInput = context.ReadValue<Vector2>();
 
-        // Normalized 'X' value
-        NormalizedInputX = (int)(RawMovementInput * Vector2.right).normalized.x;
-        // Normalized 'Y' value
-        NormalizedInputY = (int)(RawMovementInput * Vector2.up).normalized.y;
+        if (useThreshold)
+        {
+            // Normalized 'X' value
+            if (Mathf.Abs(RawMovementInput.x) > stickThreshold)
+            {
+                NormalizedInputX = (int)(RawMovementInput * Vector2.right).normalized.x;
+            }
+            else
+            {
+                NormalizedInputX = 0;
+            }
+
+            // Normalized 'Y' value
+            if (Mathf.Abs(RawMovementInput.y) > stickThreshold)
+            {
+                NormalizedInputY = (int)(RawMovementInput * Vector2.up).normalized.y;
+            }
+            else
+            {
+                NormalizedInputY = 0;
+            }
+        }
+        else
+        {
+            NormalizedInputX = (int)(RawMovementInput * Vector2.right).normalized.x;
+            NormalizedInputY = (int)(RawMovementInput * Vector2.up).normalized.y;
+        }
+        
     }
 
     // Getting jump button value from Input System
@@ -35,7 +69,26 @@ public class PlayerInputHandler : MonoBehaviour
         if (context.started)
         {
             JumpInput = true;
+            JumpInputStop = false; 
             jumpInputStartTime = Time.time;
+        }
+
+        if (context.canceled)
+        {
+            JumpInputStop = true;
+        }
+    }
+
+    // Getting grab wall value form Input System
+    public void OnGrabWallInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            GrabWallInput = true;
+        }
+        if (context.canceled)
+        {
+            GrabWallInput = false;
         }
     }
 

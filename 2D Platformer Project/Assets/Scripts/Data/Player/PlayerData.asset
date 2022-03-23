@@ -14,10 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovementVelocity: 5
   MinVelocityX: 0.01
-  JumpVelocity: 8
+  JumpVelocity: 8.5
   AmountOfJumps: 1
   MinGroundedVelocityY: 0.01
+  WallJumpVelocity: 8.7
+  WallJumpTime: 0.1
+  WallJumpAngle: {x: 0.85, y: 2}
   CoyoteTime: 0.1
+  MaxFaliingSpeed: 7
+  JumpVelocityReductionFactor: 0.65
+  WallSlideVelocity: 2
+  WallClimbVelocity: 3
+  StartOffSet: {x: 0.25, y: 0.25}
+  StopOffSet: {x: 0.25, y: 0.6}
+  WallCheckDistace: 0.232
   GroundCheckRadius: 0.17
   WhatIsGround:
     serializedVersion: 2

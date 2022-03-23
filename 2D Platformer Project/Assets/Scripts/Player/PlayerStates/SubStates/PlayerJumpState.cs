@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerAbilityState
 {
-    private int amountOfJumpsLeft;
+    public int amountOfJumpsLeft;
 
     public PlayerJumpState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animationBoolName) : 
         base(player, stateMachine, playerData, animationBoolName)
@@ -16,16 +16,22 @@ public class PlayerJumpState : PlayerAbilityState
     {
         base.Enter();
 
+        player.InputHandler.UseJumpInput();
+
         // Make jump
         player.SetVelocityY(playerData.JumpVelocity);
+        player.InAirState.SetIsJumping(true);
 
-        // Jump is ability, neet to be set true to mark jump is done 
+        // Jump is ability, need to be set true to mark jump is done 
         isAbilityDone = true;
 
         DecreaseAmountOfJumpsLeft();
+
+        Debug.Log($"jump | {amountOfJumpsLeft}");
     }
 
     public bool CanJump() => amountOfJumpsLeft > 0;
     public void ResetAmountOfJumpsLeft() => amountOfJumpsLeft = playerData.AmountOfJumps;
     public void DecreaseAmountOfJumpsLeft() => amountOfJumpsLeft--;
+    public void IncreaseAmountOfJumpsLeft() => amountOfJumpsLeft++;
 }

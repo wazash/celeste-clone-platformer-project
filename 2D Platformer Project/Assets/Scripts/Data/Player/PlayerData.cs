@@ -16,11 +16,32 @@ public class PlayerData : ScriptableObject
     [Range(0f, 0.1f)]
     public float MinGroundedVelocityY = 0.01f;
 
+    [Header("Wall Jump State")]
+    public float WallJumpVelocity = 15f;
+    public float WallJumpTime = 0.3f;
+    public Vector2 WallJumpAngle = new Vector2(1, 2);
+
     [Header("InAir State")]
     [Range(0f, 0.5f)]
     public float CoyoteTime = 0.1f;
+    public float MaxFaliingSpeed = 10;
+    [Range(0f, 1.0f)]
+    public float JumpVelocityReductionFactor = 0.1f;
+
+    [Header("Wall Slide State")]
+    [Range(0f, 10f)]
+    public float WallSlideVelocity = 2.5f;
+
+    [Header("Wall Climb State")]
+    public float WallClimbVelocity = 3f;
+
+    [Header("Ledge Climb State")]
+    public Vector2 StartOffSet;
+    public Vector2 StopOffSet;
 
     [Header("Check Variables")]
+    [Range(0.0f, 1.0f)]
+    public float WallCheckDistace = 0.2f;
     [Range(0.0f, 2.0f)]
     public float GroundCheckRadius = 0.3f;
     public LayerMask WhatIsGround;
@@ -30,5 +51,9 @@ public enum AnimationName
 {
     Idling,
     Running,
-    InAir
+    InAir,
+    WallGrab,
+    WallSlide,
+    WallClimb,
+    Ledge
 }

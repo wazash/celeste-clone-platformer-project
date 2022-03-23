@@ -11,7 +11,13 @@ public class Player : MonoBehaviour
     public PlayerMoveState MoveState { get; private set; }
     public PlayerJumpState JumpState { get; private set; }
     public PlayerInAirState InAirState { get; private set; }
-     
+    public PlayerWallGrabState WallGrabState { get; private set; }
+    public PlayerWallClimbState WallClimbState { get; private set; }
+    public PlayerWallSlideState WallSlideState { get; private set; }
+    public PlayerWallJumpState WallJumpState { get; private set; }
+
+    public PlayerLedgeClimbState LedgeClimbState { get; private set; }
+
 
     [SerializeField]
     private PlayerData playerData;
@@ -25,13 +31,16 @@ public class Player : MonoBehaviour
 
     #region Check variables
     [SerializeField]
-    protected Transform groundCheck; 
+    protected Transform groundCheck;
+    [SerializeField]
+    protected Transform wallCheck;
+    [SerializeField]
+    private Transform ledgeCheck;
     #endregion
 
     #region Other variables
     public Vector2 CurrentVelocity { get; private set; }
-    public int FacingDirection { get; private set; } // 0 - left, 1 - right 
-
+    public int FacingDirection { get; private set; } = 1; // -1 - left, 1 - right 
 
     private Vector2 workspace;
     #endregion
@@ -48,6 +57,11 @@ public class Player : MonoBehaviour
         MoveState = new PlayerMoveState(this, StateMachine, playerData, AnimationName.Running.ToString());
         JumpState = new PlayerJumpState(this, StateMachine, playerData, AnimationName.InAir.ToString());
         InAirState = new PlayerInAirState(this, StateMachine, playerData, AnimationName.InAir.ToString());
+        WallGrabState = new PlayerWallGrabState(this, StateMachine, playerData, AnimationName.WallGrab.ToString());
+        WallSlideState = new PlayerWallSlideState(this, StateMachine, playerData, AnimationName.WallSlide.ToString());
+        WallClimbState = new PlayerWallClimbState(this, StateMachine, playerData, AnimationName.WallClimb.ToString());
+        WallJumpState = new PlayerWallJumpState(this, StateMachine, playerData, AnimationName.InAir.ToString());
+        LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, playerData, AnimationName.Ledge.ToString());
     }
 
     private void Start()
@@ -81,6 +95,11 @@ public class Player : MonoBehaviour
 
     #region Set methods
 
+    public void SetVelocityZero()
+    {
+        Rigidbody.velocity = Vector2.zero;
+        CurrentVelocity = Vector2.zero;
+    }
     public void SetVelocityY(float velocity)
     {
         workspace.Set(CurrentVelocity.x, velocity);
@@ -93,9 +112,30 @@ public class Player : MonoBehaviour
         Rigidbody.velocity = workspace;
         CurrentVelocity = workspace;
     } 
+
+    public void SetVelocity(float velocity, Vector2 angle, int direction)
+    {
+        angle.Normalize();
+        workspace.Set(angle.x * velocity * direction, angle.y * velocity);
+        Rigidbody.velocity = workspace;
+        CurrentVelocity = workspace;
+    }
     #endregion
 
     #region Check methods
+    public bool CheckIfTouchingLedge()
+    {
+        return Physics2D.Raycast(ledgeCheck.position, Vector2.right * FacingDirection, playerData.WallCheckDistace, playerData.WhatIsGround);
+    }
+
+    public bool CheckIsTouchingWall()
+    {
+        return Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDirection, playerData.WallCheckDistace, playerData.WhatIsGround);
+    }
+    public bool CheckIsTouchingWallBack()
+    {
+        return Physics2D.Raycast(wallCheck.position, Vector2.right * -FacingDirection, playerData.WallCheckDistace, playerData.WhatIsGround);
+    }
     public bool CheckIsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, playerData.GroundCheckRadius, playerData.WhatIsGround);
@@ -110,13 +150,43 @@ public class Player : MonoBehaviour
     #region Other methods
     private void OnDrawGizmos()
     {
+        // Draw ground checker
         Gizmos.color = CheckIsGrounded() ? Color.green : Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, playerData.GroundCheckRadius);
+
+        // Draw front wall checker
+        Gizmos.color = CheckIsTouchingWall() ? Color.green : Color.red;
+        Gizmos.DrawLine(wallCheck.position, 
+            new Vector3(wallCheck.position.x + playerData.WallCheckDistace * FacingDirection, wallCheck.position.y, wallCheck.position.z));
+        
+        // Draw back wall checker
+        Gizmos.color = CheckIsTouchingWallBack() ? Color.blue : Color.magenta;
+        Gizmos.DrawLine(new Vector3(wallCheck.position.x, wallCheck.position.y, wallCheck.position.z), 
+            new Vector3(wallCheck.position.x + playerData.WallCheckDistace * -FacingDirection, wallCheck.position.y, wallCheck.position.z));
+        
+        // Draw Ledge checker
+        Gizmos.color = CheckIfTouchingLedge() ? Color.green : Color.red;
+        Gizmos.DrawLine(ledgeCheck.position,
+            new Vector3(ledgeCheck.position.x + playerData.WallCheckDistace * FacingDirection, ledgeCheck.position.y, ledgeCheck.position.z));
     }
     private void Flip()
     {
         FacingDirection *= -1;
         transform.Rotate(0.0f, 180.0f, 0.0f);
     } 
+
+    public Vector2 DetermineCornerPosiotion()
+    {
+        RaycastHit2D xHit = Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDirection, playerData.WallCheckDistace, playerData.WhatIsGround);
+        float xDistance = xHit.distance;
+
+        workspace.Set(xDistance * FacingDirection, 0f);
+
+        RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + (Vector3)workspace, Vector2.down, ledgeCheck.position.y - wallCheck.position.y, playerData.WhatIsGround);
+        float yDistance = yHit.distance;
+
+        workspace.Set(wallCheck.position.x + xDistance * FacingDirection, ledgeCheck.position.y - yDistance);
+        return workspace;
+    }
     #endregion
 }
