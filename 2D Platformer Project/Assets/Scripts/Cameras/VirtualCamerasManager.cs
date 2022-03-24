@@ -8,18 +8,16 @@ public class VirtualCamerasManager : MonoBehaviour
 {
     private void OnEnable()
     {
-        EventsManager.OnCameraPriorityChanged.AddListener(ChangeCameraPriority);
+        VerticalDoors.OnPriorityCameraChaged += ChangeCameraPriority;
     }
 
     private void OnDisable()
     {
-        EventsManager.OnCameraPriorityChanged.RemoveListener(ChangeCameraPriority);
+        VerticalDoors.OnPriorityCameraChaged -= ChangeCameraPriority;
     }
 
-    private void ChangeCameraPriority(CinemachineVirtualCamera virtualCamera, int priorityValue)
+    public void ChangeCameraPriority(CinemachineVirtualCamera vCamera, int priorityValue)
     {
-        virtualCamera.Priority = priorityValue;
+        vCamera.Priority = priorityValue;
     }
-
-    
 }

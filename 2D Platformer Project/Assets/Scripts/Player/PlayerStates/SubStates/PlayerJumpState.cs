@@ -26,8 +26,6 @@ public class PlayerJumpState : PlayerAbilityState
         isAbilityDone = true;
 
         DecreaseAmountOfJumpsLeft();
-
-        Debug.Log($"jump | {amountOfJumpsLeft}");
     }
 
     public bool CanJump() => amountOfJumpsLeft > 0;

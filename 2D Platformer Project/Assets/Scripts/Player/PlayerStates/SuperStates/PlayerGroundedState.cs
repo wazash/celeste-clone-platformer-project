@@ -9,6 +9,7 @@ public class PlayerGroundedState : PlayerState
     protected int xInput;
     private bool jumpInput;
     private bool grabWallInput;
+    private bool dashInput;
 
     private bool isGrounded;    // Need to know if player is grounded, obviously...
     private bool isTouchingWall;
@@ -31,6 +32,8 @@ public class PlayerGroundedState : PlayerState
         base.Enter();
 
         player.JumpState.ResetAmountOfJumpsLeft();  // Reset jumps
+        player.DashState.ResetCanDash();    // Reset dash
+
     }
 
     public override void Exit()
@@ -46,6 +49,7 @@ public class PlayerGroundedState : PlayerState
         xInput = player.InputHandler.NormalizedInputX;
         jumpInput = player.InputHandler.JumpInput;
         grabWallInput = player.InputHandler.GrabWallInput;
+        dashInput = player.InputHandler.DashInput;
 
         // Chage states
         if (jumpInput && player.JumpState.CanJump())
@@ -60,6 +64,10 @@ public class PlayerGroundedState : PlayerState
         else if (grabWallInput && isTouchingWall)
         {
             stateMachine.ChangeState(player.WallGrabState);
+        }
+        else if (dashInput && player.DashState.CheckIfCanDash() && player.InputHandler.DashDirectionInput != Vector2.zero)
+        {
+            stateMachine.ChangeState(player.DashState);
         }
     }
 

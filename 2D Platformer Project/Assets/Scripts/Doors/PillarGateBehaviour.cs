@@ -1,5 +1,6 @@
 using Cinemachine;
 using DG.Tweening;
+using System;
 using UnityEngine;
 
 public class PillarGateBehaviour : MonoBehaviour

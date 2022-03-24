@@ -15,8 +15,8 @@ public class Player : MonoBehaviour
     public PlayerWallClimbState WallClimbState { get; private set; }
     public PlayerWallSlideState WallSlideState { get; private set; }
     public PlayerWallJumpState WallJumpState { get; private set; }
-
     public PlayerLedgeClimbState LedgeClimbState { get; private set; }
+    public PlayerDashState DashState { get; private set; }
 
 
     [SerializeField]
@@ -62,6 +62,7 @@ public class Player : MonoBehaviour
         WallClimbState = new PlayerWallClimbState(this, StateMachine, playerData, AnimationName.WallClimb.ToString());
         WallJumpState = new PlayerWallJumpState(this, StateMachine, playerData, AnimationName.InAir.ToString());
         LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, playerData, AnimationName.Ledge.ToString());
+        DashState = new PlayerDashState(this, StateMachine, playerData, AnimationName.InAir.ToString());    // change animation state
     }
 
     private void Start()
@@ -117,6 +118,12 @@ public class Player : MonoBehaviour
     {
         angle.Normalize();
         workspace.Set(angle.x * velocity * direction, angle.y * velocity);
+        Rigidbody.velocity = workspace;
+        CurrentVelocity = workspace;
+    }
+    public void SetVelocity(float velocity, Vector2 direction)
+    {
+        workspace = direction * velocity;
         Rigidbody.velocity = workspace;
         CurrentVelocity = workspace;
     }

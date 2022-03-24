@@ -9,18 +9,19 @@ public class PlayerInAirState : PlayerState
     private bool jumpInput;
     private bool jumpInputStop;
     private bool grabWallInput;
+    private bool dashInput;
 
     // Chekers
     private bool isGrounded;
+    private bool isJumping;
     private bool isTouchingWall;
     private bool oldIsTouchingWall;
     private bool isTouchingWallBack;
     private bool oldIsTouchingWallBack;
     private bool isTouchingLedge;
-    private bool isJumping;
+
     private bool coyoteTime;
     private bool wallJumpCoyoteTime;
-
     private float startWallJumpCoyoteTime;
 
     public PlayerInAirState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animationBoolName) : 
@@ -77,6 +78,7 @@ public class PlayerInAirState : PlayerState
         jumpInput = player.InputHandler.JumpInput;
         jumpInputStop = player.InputHandler.JumpInputStop;
         grabWallInput = player.InputHandler.GrabWallInput;
+        dashInput = player.InputHandler.DashInput;
 
         // Calculate 'coyote time'
         CheckCoyoteTime();
@@ -121,6 +123,10 @@ public class PlayerInAirState : PlayerState
             {
                 stateMachine.ChangeState(player.WallSlideState);
             }
+        }
+        else if (dashInput && player.DashState.CheckIfCanDash() && player.InputHandler.DashDirectionInput != Vector2.zero)
+        {
+            stateMachine.ChangeState(player.DashState);
         }
     }
 

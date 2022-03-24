@@ -4,12 +4,17 @@ using UnityEngine.InputSystem;
 public class PlayerInputHandler : MonoBehaviour
 {
     // Create getter 
+    private PlayerInput playerInput;
+
     public Vector2 RawMovementInput { get; private set; }
+    public Vector2 RawDashDirectionInput { get; private set; }
+    public Vector2Int DashDirectionInput { get; private set; }
     public int NormalizedInputX { get; private set; }
     public int NormalizedInputY { get; private set; }
     public bool JumpInput { get; private set; }
     public bool JumpInputStop { get; private set; }
     public bool GrabWallInput { get; private set; }
+    public bool DashInput { get; private set; }
 
     [SerializeField, Tooltip("Time, how long input will 'hold' true in jump input value after press jump button")]
     private float inputHoldTime = 0.2f;
@@ -22,10 +27,17 @@ public class PlayerInputHandler : MonoBehaviour
     private float stickThreshold = .5f;
 
     private float jumpInputStartTime;
+    private float dashInputStartTime;
+
+    private void Start()
+    {
+        playerInput = GetComponent<PlayerInput>();
+    }
 
     private void Update()
     {
         CheckJumpInputHoldTime();
+        CheckDashInputHoldTime();
     }
 
     // Getting movement vector2 value from Input System
@@ -79,6 +91,18 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Make jump input used (set to flase)
+    /// </summary>
+    public void UseJumpInput() => JumpInput = false;
+    private void CheckJumpInputHoldTime()
+    {
+        if (Time.time >= jumpInputStartTime + inputHoldTime)
+        {
+            JumpInput = false;
+        }
+    }
+
     // Getting grab wall value form Input System
     public void OnGrabWallInput(InputAction.CallbackContext context)
     {
@@ -92,15 +116,27 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Make jump input used (set to flase)
-    /// </summary>
-    public void UseJumpInput() => JumpInput = false;
-    private void CheckJumpInputHoldTime()
+    public void OnDashInput(InputAction.CallbackContext context)
     {
-        if(Time.time >= jumpInputStartTime + inputHoldTime)
+        if (context.started)
         {
-            JumpInput = false;
+            DashInput = true;
+            dashInputStartTime = Time.time;
         }
+    }
+    public void UseDashInput() => DashInput = false;
+    private void CheckDashInputHoldTime()
+    {
+        if(Time.time >= dashInputStartTime + inputHoldTime)
+        {
+            UseDashInput();
+        }
+    }
+
+    public void OnDashDirectionInput(InputAction.CallbackContext context)
+    {
+        RawDashDirectionInput = context.ReadValue<Vector2>();
+
+        DashDirectionInput = Vector2Int.RoundToInt(RawDashDirectionInput.normalized);
     }
 }

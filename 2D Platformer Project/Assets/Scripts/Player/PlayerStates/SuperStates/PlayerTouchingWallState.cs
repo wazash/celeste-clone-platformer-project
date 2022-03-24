@@ -9,6 +9,7 @@ public class PlayerTouchingWallState : PlayerState
     protected int yInput;
     protected bool grabWallInput;
     protected bool jumpInput;
+    protected bool dashInput;
     
     // Checkers
     protected bool isGrounded;
@@ -55,6 +56,7 @@ public class PlayerTouchingWallState : PlayerState
         yInput = player.InputHandler.NormalizedInputY;
         grabWallInput = player.InputHandler.GrabWallInput;
         jumpInput = player.InputHandler.JumpInput;
+        dashInput = player.InputHandler.DashInput;
 
         if (jumpInput)
         {
@@ -72,6 +74,10 @@ public class PlayerTouchingWallState : PlayerState
         else if(isTouchingWall && !isTouchingLedge && (xInput == player.FacingDirection || yInput >= 0))
         {
             stateMachine.ChangeState(player.LedgeClimbState);
+        }
+        else if(dashInput && player.DashState.CheckIfCanDash() && player.InputHandler.DashDirectionInput.x == -player.FacingDirection)
+        {
+            stateMachine.ChangeState(player.DashState);
         }
     }
 
