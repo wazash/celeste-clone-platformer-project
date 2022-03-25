@@ -39,7 +39,7 @@ public class PlayerDashState : PlayerAbilityState
     {
         base.Exit();
 
-        if(player.CurrentVelocity.y > 0)
+        if (player.CurrentVelocity.y > 0)
         {
             player.SetVelocityY(player.CurrentVelocity.y * playerData.DashEndMultiplierY);
         }
@@ -48,6 +48,8 @@ public class PlayerDashState : PlayerAbilityState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        //player.Animator.SetFloat(AnimationName.InAir.ToString(), player.CurrentVelocity.y);
 
         if (!isExitingState)
         {

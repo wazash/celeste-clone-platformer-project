@@ -67,11 +67,16 @@ public class PlayerInAirState : PlayerState
 
         isTouchingWall = false;
         isTouchingWallBack = false;
+
+        player.Animator.SetFloat("yVelocity", 1f);  // Prevent bug with jumping animation
+
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        player.Animator.SetFloat("yVelocity", player.CurrentVelocity.y);    // control blend tree parameter
 
         // Get inputs
         xInput = player.InputHandler.NormalizedInputX;
@@ -90,6 +95,7 @@ public class PlayerInAirState : PlayerState
         CheckJumpMultiplier();
 
         // Change states
+        #region CHANGE STATE
         if (isGrounded && player.CurrentVelocity.y < playerData.MinGroundedVelocityY)    // change to some of grounded state
         {
             if (xInput == 0)
@@ -97,37 +103,43 @@ public class PlayerInAirState : PlayerState
             else
                 stateMachine.ChangeState(player.MoveState);
         }
-        else if(isTouchingWall && !isTouchingLedge && xInput == player.FacingDirection)
+        
+        if (isTouchingWall && !isTouchingLedge && xInput == player.FacingDirection)
         {
             stateMachine.ChangeState(player.LedgeClimbState);
         }
-        else if(jumpInput && (isTouchingWall || isTouchingWallBack || wallJumpCoyoteTime))    // change to wall jump ability state
+        
+        if (jumpInput && (isTouchingWall || isTouchingWallBack || wallJumpCoyoteTime))    // change to wall jump ability state
         {
             StopWallJumpCoyoteTime();
             isTouchingWall = player.CheckIsTouchingWall();  // prevent desync between checking isTouchingWall in fixeedUpdate and normal Update
             player.WallJumpState.DetermineWallJumpDrection(isTouchingWall);
             stateMachine.ChangeState(player.WallJumpState);
         }
-        else if (jumpInput && player.JumpState.CanJump())   // change to jump ability state
+        
+        if (jumpInput && player.JumpState.CanJump())   // change to jump ability state
         {
             coyoteTime = false;
             stateMachine.ChangeState(player.JumpState);
         }
-        else if(isTouchingWall) // change to touching wall state
+        
+        if (isTouchingWall) // change to touching wall state
         {
             if (grabWallInput)
             {
                 stateMachine.ChangeState(player.WallGrabState);
             }
-            else if(xInput == player.FacingDirection && player.CurrentVelocity.y <= 0)
+            else if (xInput == player.FacingDirection && player.CurrentVelocity.y <= 0)
             {
                 stateMachine.ChangeState(player.WallSlideState);
             }
         }
-        else if (dashInput && player.DashState.CheckIfCanDash() && player.InputHandler.DashDirectionInput != Vector2.zero)
+        
+        if (dashInput && player.DashState.CheckIfCanDash() && player.InputHandler.DashDirectionInput != Vector2.zero)
         {
             stateMachine.ChangeState(player.DashState);
-        }
+        } 
+        #endregion
     }
 
     public override void PhysicsUpdate()
@@ -161,8 +173,6 @@ public class PlayerInAirState : PlayerState
     {
         player.CheckIfShouldFlip(xInput);
         player.SetVelocityX(playerData.MovementVelocity * xInput);
-
-        player.Animator.SetFloat("yVelocity", player.CurrentVelocity.y);    // control blend tree parameter
     }
 
     /// <summary>

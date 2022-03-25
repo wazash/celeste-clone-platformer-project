@@ -19,7 +19,8 @@ public class PlayerJumpState : PlayerAbilityState
         player.InputHandler.UseJumpInput();
 
         // Make jump
-        player.SetVelocityY(playerData.JumpVelocity);
+        //player.SetVelocityY(playerData.JumpVelocity);
+        player.Rigidbody.AddForce(playerData.JumpVelocity * Vector2.up, ForceMode2D.Impulse);
         player.InAirState.SetIsJumping(true);
 
         // Jump is ability, need to be set true to mark jump is done 

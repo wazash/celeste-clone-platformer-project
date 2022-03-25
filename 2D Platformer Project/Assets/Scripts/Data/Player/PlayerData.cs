@@ -7,6 +7,9 @@ public class PlayerData : ScriptableObject
 {
     [Header("Moving")]
     public float MovementVelocity = 5.0f;
+    public float Acceleration = 5f;
+    public float Deceleration = 5f;
+    public float VelocityPower = 0.9f;
     [Range(0f, 0.1f)]
     public float MinVelocityX = 0.01f;
 

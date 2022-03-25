@@ -12,19 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191c32a5c731586418d4ddcb56bcf40e, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  MovementVelocity: 4.5
-  MovementAcceleration: 1
-  MovementDeceleration: 2
+  MovementVelocity: 5
+  Acceleration: 16
+  Deceleration: 32
+  VelocityPower: 0.9
   MinVelocityX: 0.01
-  JumpVelocity: 8.5
+  JumpVelocity: 12
   AmountOfJumps: 1
   MinGroundedVelocityY: 0.01
-  DashVelocity: 12
+  DashVelocity: 15
   AmountOfDashes: 1
   DashCooldown: 0.5
-  DashTime: 0.2
+  DashTime: 0.15
   DashDrag: 10
-  DashEndMultiplierY: 0.2
+  DashEndMultiplierY: 0.5
   DistanceBetweenAfterImages: 0.5
   WallJumpVelocity: 9
   WallJumpTime: 0.1

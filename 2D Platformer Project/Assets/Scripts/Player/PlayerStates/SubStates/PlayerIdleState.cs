@@ -19,4 +19,23 @@ public class PlayerIdleState : PlayerGroundedState
             stateMachine.ChangeState(player.MoveState);
         }
     }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+
+        //player.Move(xInput);
+        Decelerate();
+    }
+
+    private void Decelerate()
+    {
+        float targetSpeed = xInput;
+
+        float speedDifference = targetSpeed - player.CurrentVelocity.x;
+
+        float movement = Mathf.Pow(Mathf.Abs(speedDifference) * playerData.Deceleration, playerData.VelocityPower) * Mathf.Sign(speedDifference);
+
+        player.Rigidbody.AddForce(movement * Vector2.right);
+    }
 }

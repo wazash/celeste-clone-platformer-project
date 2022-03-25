@@ -9,15 +9,20 @@ public class PlayerMoveState : PlayerGroundedState
 
     // ===== Overrides =====
 
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
         // Check if should flip
-        player.CheckIfShouldFlip(xInput);
+        //player.CheckIfShouldFlip(xInput);
 
         // Move player
-        Move();
+        //Move();
 
         // Change state to IdleState
         if (xInput == 0 && !isExitingState)
@@ -30,11 +35,22 @@ public class PlayerMoveState : PlayerGroundedState
     {
         base.PhysicsUpdate();
 
+        //player.Move(xInput);
+        Move();
+
     }
 
     // ===== Own Methods =====
     private void Move()
     {
-        player.SetVelocityX(playerData.MovementVelocity * xInput);
+        //player.SetVelocityX(playerData.MovementVelocity * xInput);
+
+        float targetSpeed = playerData.MovementVelocity * xInput;
+
+        float speedDifference = targetSpeed - player.CurrentVelocity.x;
+
+        float movement = Mathf.Pow(Mathf.Abs(speedDifference) * playerData.Acceleration, playerData.VelocityPower) * Mathf.Sign(speedDifference);
+
+        player.Rigidbody.AddForce(movement * Vector2.right);
     }
 }

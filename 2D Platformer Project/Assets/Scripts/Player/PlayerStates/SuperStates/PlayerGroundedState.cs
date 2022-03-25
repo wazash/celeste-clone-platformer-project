@@ -33,7 +33,6 @@ public class PlayerGroundedState : PlayerState
 
         player.JumpState.ResetAmountOfJumpsLeft();  // Reset jumps
         player.DashState.ResetCanDash();    // Reset dash
-
     }
 
     public override void Exit()
@@ -50,6 +49,9 @@ public class PlayerGroundedState : PlayerState
         jumpInput = player.InputHandler.JumpInput;
         grabWallInput = player.InputHandler.GrabWallInput;
         dashInput = player.InputHandler.DashInput;
+
+        player.CheckIfShouldFlip(xInput);
+        LimitGroundedSpeed();
 
         // Chage states
         if (jumpInput && player.JumpState.CanJump())
@@ -74,5 +76,13 @@ public class PlayerGroundedState : PlayerState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+    }
+
+    private void LimitGroundedSpeed()
+    {
+        if(Mathf.Abs(player.CurrentVelocity.x) <= playerData.MinVelocityX)
+        {
+            player.SetVelocityX(0);
+        }
     }
 }
