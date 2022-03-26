@@ -31,6 +31,8 @@ public class PlayerDashState : PlayerAbilityState
 
         player.InputHandler.UseDashInput();
 
+        player.JumpState.DecreaseAmountOfJumpsLeft();
+
         dashDirection = Vector2.right * player.FacingDirection;
         startTime = Time.time;
     }

@@ -77,6 +77,8 @@ public class Player : MonoBehaviour
 
         // Set facing direction to right
         FacingDirection = 1;
+
+        SetupJumpVariables();
     }
 
     private void Update()
@@ -130,11 +132,11 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Check methods
-    public bool CheckIfTouchingLedge()
+    public bool CheckIsGrounded()
     {
-        return Physics2D.Raycast(ledgeCheck.position, Vector2.right * FacingDirection, playerData.WallCheckDistace, playerData.WhatIsGround);
+        return Physics2D.OverlapCircle(groundCheck.position, playerData.GroundCheckRadius, playerData.WhatIsGround);
+        //return Physics2D.OverlapBox(groundCheck.position, new Vector2(playerData.GroundCheckWidth, playerData.GroundCheckHeight), 0, playerData.WhatIsGround);
     }
-
     public bool CheckIsTouchingWall()
     {
         return Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDirection, playerData.WallCheckDistace, playerData.WhatIsGround);
@@ -143,10 +145,11 @@ public class Player : MonoBehaviour
     {
         return Physics2D.Raycast(wallCheck.position, Vector2.right * -FacingDirection, playerData.WallCheckDistace, playerData.WhatIsGround);
     }
-    public bool CheckIsGrounded()
+    public bool CheckIfTouchingLedge()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, playerData.GroundCheckRadius, playerData.WhatIsGround);
+        return Physics2D.Raycast(ledgeCheck.position, Vector2.right * FacingDirection, playerData.WallCheckDistace, playerData.WhatIsGround);
     }
+
     public void CheckIfShouldFlip(int xInput)
     {
         if (xInput != 0 && xInput != FacingDirection)
@@ -160,6 +163,7 @@ public class Player : MonoBehaviour
         // Draw ground checker
         Gizmos.color = CheckIsGrounded() ? Color.green : Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, playerData.GroundCheckRadius);
+        //Gizmos.DrawWireCube(groundCheck.position, new Vector3(playerData.GroundCheckWidth, playerData.GroundCheckHeight, 1));
 
         // Draw front wall checker
         Gizmos.color = CheckIsTouchingWall() ? Color.green : Color.red;
@@ -182,6 +186,10 @@ public class Player : MonoBehaviour
         transform.Rotate(0.0f, 180.0f, 0.0f);
     } 
 
+    /// <summary>
+    /// Determine corner ledge position
+    /// </summary>
+    /// <returns></returns>
     public Vector2 DetermineCornerPosiotion()
     {
         RaycastHit2D xHit = Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDirection, playerData.WallCheckDistace, playerData.WhatIsGround);
@@ -194,6 +202,16 @@ public class Player : MonoBehaviour
 
         workspace.Set(wallCheck.position.x + xDistance * FacingDirection, ledgeCheck.position.y - yDistance);
         return workspace;
+    }
+
+    /// <summary>
+    /// Calculate falling gravity and needed jump velocity based on maximum jump height
+    /// </summary>
+    public void SetupJumpVariables()
+    {
+        float timeToApex = playerData.MaxJumpTime / 2;
+        playerData.Gravity = (-2 * playerData.MaxJumpHeight) / Mathf.Pow(timeToApex, 2);
+        playerData.InitialJumpVelocity = (2 * playerData.MaxJumpHeight) / timeToApex;
     }
     #endregion
 }

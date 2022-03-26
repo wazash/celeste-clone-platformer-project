@@ -5,19 +5,41 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Player Data", menuName = "Data/Player/Base Data")]
 public class PlayerData : ScriptableObject
 {
+    [Header("Gravity")]
+    [HideInInspector]
+    public float Gravity;
+    [HideInInspector]
+    public float GroundedGravity = -0.01f;
+
     [Header("Moving")]
+    [Tooltip("Maximum player grounded speed")]
     public float MovementVelocity = 5.0f;
+    [Tooltip("Acceleration factor. How fast player will accelerate")]
     public float Acceleration = 5f;
+    [Tooltip("Deceleration factor. How fast player will decelerate")]
     public float Deceleration = 5f;
+    [Tooltip("Power of de/acceleration applying")]
     public float VelocityPower = 0.9f;
-    [Range(0f, 0.1f)]
-    public float MinVelocityX = 0.01f;
+    [Range(0f, 0.1f), Tooltip("If player will moving slower, his velocity will be set at 0")]
+    public float MinGroundedVelocityX = 0.01f;
+    [Range(0f, 0.1f), Tooltip("If player falling moving slower, his velocity will be set at 0")]
+    public float MinGroundedVelocityY = 0.01f;
 
     [Header("Jumping")]
-    public float JumpVelocity = 8.0f;
+    [Tooltip("How high player can jump by default")]
+    public float MaxJumpHeight;
+    [HideInInspector, Tooltip("Jump power. Calculate from maximum jump height and time")]
+    public float InitialJumpVelocity;
+    [Tooltip("How long the jump will last by default")]
+    public float MaxJumpTime;
+    [Tooltip("Maximum number of jumps")]
     public int AmountOfJumps = 1;
-    [Range(0f, 0.1f)]
-    public float MinGroundedVelocityY = 0.01f;
+    [Range(0f, 0.5f), Tooltip("Short time after leaving the ground when player can jump")]
+    public float CoyoteTime = 0.1f;
+    [Tooltip("Maximum falling velocity")]
+    public float MaxFaliingSpeed = 10;
+    [Range(0f, 1.0f), Tooltip("Factor determining jumping velocity reduction on release jump button")]
+    public float JumpVelocityReductionFactor = 0.1f;
 
     [Header("Dashing")]
     public float DashVelocity = 12;
@@ -35,12 +57,6 @@ public class PlayerData : ScriptableObject
     public float WallJumpTime = 0.3f;
     public Vector2 WallJumpAngle = new Vector2(1, 2);
 
-    [Header("InAir State")]
-    [Range(0f, 0.5f)]
-    public float CoyoteTime = 0.1f;
-    public float MaxFaliingSpeed = 10;
-    [Range(0f, 1.0f)]
-    public float JumpVelocityReductionFactor = 0.1f;
 
     [Header("Wall Sliding")]
     [Range(0f, 10f)]
@@ -58,6 +74,8 @@ public class PlayerData : ScriptableObject
     public float WallCheckDistace = 0.2f;
     [Range(0.0f, 2.0f)]
     public float GroundCheckRadius = 0.3f;
+    public float GroundCheckWidth = 0.3f;
+    public float GroundCheckHeight = 0.3f;
     public LayerMask WhatIsGround;
 }
 

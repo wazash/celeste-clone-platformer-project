@@ -84,7 +84,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2483931939359396224}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.466, z: 0}
+  m_LocalPosition: {x: 0, y: -0.508, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1691529954307116577}
@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: 2483931940027751293}
   - component: {fileID: 2483931940027751295}
   - component: {fileID: 2483931940027751294}
+  - component: {fileID: 805313658}
   - component: {fileID: 2483931940027751292}
   - component: {fileID: 8374512372776052224}
   - component: {fileID: 1546411828}
@@ -226,7 +227,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 3
+  m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 08fba7a3ed057c94395a8cf88b44f390, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -245,7 +246,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.12604856}
+  m_Offset: {x: 0, y: -0.17079782}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -256,8 +257,24 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.35558772, y: 0.8299093}
+  m_Size: {x: 0.29925066, y: 0.7404108}
   m_EdgeRadius: 0
+--- !u!70 &805313658
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2483931940027751289}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.103058875}
+  m_Size: {x: 0.29689315, y: 0.858972}
+  m_Direction: 0
 --- !u!95 &2483931940027751292
 Animator:
   serializedVersion: 3
@@ -381,6 +398,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 454c573e-2c5b-4bd3-bb90-d888130234e4
     m_ActionName: Gameplay/GrabWall[/DualShock4GamepadHID/rightTrigger,/Keyboard/a]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1546411828}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnDashInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e72282ec-0f8b-423e-b660-555f5be55346
+    m_ActionName: Gameplay/Dash[/DualShock4GamepadHID/buttonWest,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1546411828}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnDashDirectionInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 63c8b7cf-2553-45a0-8b9f-659f45318e27
+    m_ActionName: Gameplay/DashDirection[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay

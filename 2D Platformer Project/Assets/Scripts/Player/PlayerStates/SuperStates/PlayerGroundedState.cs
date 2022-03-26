@@ -11,7 +11,8 @@ public class PlayerGroundedState : PlayerState
     private bool grabWallInput;
     private bool dashInput;
 
-    private bool isGrounded;    // Need to know if player is grounded, obviously...
+    // Checkers
+    private bool isGrounded;
     private bool isTouchingWall;
 
     public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animationBoolName) : 
@@ -23,21 +24,18 @@ public class PlayerGroundedState : PlayerState
     {
         base.DoChecks();
 
-        isGrounded = player.CheckIsGrounded();  // Check if player is grounded 
-        isTouchingWall = player.CheckIsTouchingWall();  // Check if player is near facing wall
+        // Execute checkers
+        isGrounded = player.CheckIsGrounded();  
+        isTouchingWall = player.CheckIsTouchingWall();  
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        player.JumpState.ResetAmountOfJumpsLeft();  // Reset jumps
-        player.DashState.ResetCanDash();    // Reset dash
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
+        // Reset Abilities
+        player.JumpState.ResetAmountOfJumpsLeft();  
+        player.DashState.ResetCanDash();    
     }
 
     public override void LogicUpdate()
@@ -45,15 +43,12 @@ public class PlayerGroundedState : PlayerState
         base.LogicUpdate();
 
         // Get inputs
-        xInput = player.InputHandler.NormalizedInputX;
-        jumpInput = player.InputHandler.JumpInput;
-        grabWallInput = player.InputHandler.GrabWallInput;
-        dashInput = player.InputHandler.DashInput;
+        GetInputs();
 
         player.CheckIfShouldFlip(xInput);
-        LimitGroundedSpeed();
 
-        // Chage states
+
+        #region CHANGE STATES
         if (jumpInput && player.JumpState.CanJump())
         {
             stateMachine.ChangeState(player.JumpState); // Go to Jump state (ability)
@@ -70,19 +65,34 @@ public class PlayerGroundedState : PlayerState
         else if (dashInput && player.DashState.CheckIfCanDash() && player.InputHandler.DashDirectionInput != Vector2.zero)
         {
             stateMachine.ChangeState(player.DashState);
-        }
+        } 
+        #endregion
     }
+
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+
+        ApplyGroundedGravity(playerData.GroundedGravity);
     }
 
-    private void LimitGroundedSpeed()
+    // ===== Own Methods =====
+    /// <summary>
+    /// Smoothly accelerate player
+    /// </summary>
+    private void GetInputs()
     {
-        if(Mathf.Abs(player.CurrentVelocity.x) <= playerData.MinVelocityX)
-        {
-            player.SetVelocityX(0);
-        }
+        xInput = player.InputHandler.NormalizedInputX;
+        jumpInput = player.InputHandler.JumpInput;
+        grabWallInput = player.InputHandler.GrabWallInput;
+        dashInput = player.InputHandler.DashInput;
     }
+
+    private void ApplyGroundedGravity(float groundedGravity)
+    {
+        player.Rigidbody.AddForce(groundedGravity * Vector2.up, ForceMode2D.Force);
+    }
+
+
 }

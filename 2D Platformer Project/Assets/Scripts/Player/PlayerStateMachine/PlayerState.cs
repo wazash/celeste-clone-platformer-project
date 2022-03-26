@@ -24,12 +24,8 @@ public class PlayerState
     {
         DoChecks();
         player.Animator.SetBool(animationBoolName, true); // Start playing animation
-
         startTime = Time.time;  // Start counting enter time
-
         isExitingState = false;
-
-        //Debug.Log(animationBoolName);
     }
 
     public virtual void Exit()

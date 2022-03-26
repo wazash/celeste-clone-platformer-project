@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerWallJumpState : PlayerAbilityState
 {
     private int wallJumpDirection;
-    private int  xInput;
+    private int xInput;
 
     public PlayerWallJumpState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animationBoolName) : 
         base(player, stateMachine, playerData, animationBoolName)
@@ -20,14 +20,16 @@ public class PlayerWallJumpState : PlayerAbilityState
 
         player.InputHandler.UseJumpInput();
 
-        //player.JumpState.ResetAmountOfJumpsLeft(); // Uncomment if want to reset all jumps after walljump
         player.JumpState.DecreaseAmountOfJumpsLeft();
 
-        player.SetVelocity(playerData.WallJumpVelocity, playerData.WallJumpAngle, wallJumpDirection);
+        MakeWallJump(playerData.WallJumpVelocity, wallJumpDirection, playerData.WallJumpAngle);
+
         player.CheckIfShouldFlip(xInput);
     }
 
+
     public override void LogicUpdate()
+
     {
         base.LogicUpdate();
 
@@ -37,6 +39,12 @@ public class PlayerWallJumpState : PlayerAbilityState
         {
             isAbilityDone = true;
         }
+    }
+
+    private void MakeWallJump(float velocity, int direction, Vector2 angle)
+    {
+        player.SetVelocityZero();
+        player.Rigidbody.AddForce(velocity * direction * new Vector2(angle.x, angle.y * Mathf.Sign(direction)), ForceMode2D.Impulse);
     }
 
     /// <summary>

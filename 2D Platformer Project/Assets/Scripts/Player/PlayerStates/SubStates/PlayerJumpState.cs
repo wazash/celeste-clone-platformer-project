@@ -19,14 +19,14 @@ public class PlayerJumpState : PlayerAbilityState
         player.InputHandler.UseJumpInput();
 
         // Make jump
-        //player.SetVelocityY(playerData.JumpVelocity);
-        player.Rigidbody.AddForce(playerData.JumpVelocity * Vector2.up, ForceMode2D.Impulse);
+        player.SetVelocityY(playerData.InitialJumpVelocity);
+
         player.InAirState.SetIsJumping(true);
+
+        DecreaseAmountOfJumpsLeft();
 
         // Jump is ability, need to be set true to mark jump is done 
         isAbilityDone = true;
-
-        DecreaseAmountOfJumpsLeft();
     }
 
     public bool CanJump() => amountOfJumpsLeft > 0;
