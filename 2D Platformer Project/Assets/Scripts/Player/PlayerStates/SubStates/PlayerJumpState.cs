@@ -1,36 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerJumpState : PlayerAbilityState
 {
-    public int amountOfJumpsLeft;
+    public int AmountOfJumpsLeft;
 
-    public PlayerJumpState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animationBoolName) : 
+    public PlayerJumpState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animationBoolName) :
         base(player, stateMachine, playerData, animationBoolName)
     {
-        amountOfJumpsLeft = playerData.AmountOfJumps;
+        AmountOfJumpsLeft = playerData.AmountOfJumps;
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        player.InputHandler.UseJumpInput();
-
         // Make jump
-        player.SetVelocityY(playerData.InitialJumpVelocity);
+        Jump();
 
+        // Playe particles
+        player.Particles.JumpingPS.Play();
+
+        player.InputHandler.UseJumpInput();
         player.InAirState.SetIsJumping(true);
 
         DecreaseAmountOfJumpsLeft();
+        player.InAirState.StopCoyoteTime();
 
         // Jump is ability, need to be set true to mark jump is done 
-        isAbilityDone = true;
+        SetAbilityDone();
     }
 
-    public bool CanJump() => amountOfJumpsLeft > 0;
-    public void ResetAmountOfJumpsLeft() => amountOfJumpsLeft = playerData.AmountOfJumps;
-    public void DecreaseAmountOfJumpsLeft() => amountOfJumpsLeft--;
-    public void IncreaseAmountOfJumpsLeft() => amountOfJumpsLeft++;
+    private void Jump()
+    {
+        //player.SetVelocityY(playerData.InitialJumpVelocity);
+        player.Rigidbody.AddForce(playerData.InitialJumpVelocity * Vector2.up, ForceMode2D.Impulse);
+    }
+
+    public bool CanJump() => AmountOfJumpsLeft > 0;
+    public void ResetAmountOfJumpsLeft() => AmountOfJumpsLeft = playerData.AmountOfJumps;
+    public void DecreaseAmountOfJumpsLeft() => AmountOfJumpsLeft--;
+    public void IncreaseAmountOfJumpsLeft() => AmountOfJumpsLeft++;
 }

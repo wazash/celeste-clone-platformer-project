@@ -1,6 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+[System.Serializable]
+public struct PlayerParticles
+{
+    public ParticleSystem LandingPS;
+    public ParticleSystem JumpingPS;
+}
+
 
 public class Player : MonoBehaviour
 {
@@ -41,6 +47,8 @@ public class Player : MonoBehaviour
     #region Other variables
     public Vector2 CurrentVelocity { get; private set; }
     public int FacingDirection { get; private set; } = 1; // -1 - left, 1 - right 
+
+    [field: SerializeField] public PlayerParticles Particles { get; private set; }
 
     private Vector2 workspace;
     #endregion
@@ -114,7 +122,7 @@ public class Player : MonoBehaviour
         workspace.Set(velocity, CurrentVelocity.y);
         Rigidbody.velocity = workspace;
         CurrentVelocity = workspace;
-    } 
+    }
 
     public void SetVelocity(float velocity, Vector2 angle, int direction)
     {
@@ -153,7 +161,9 @@ public class Player : MonoBehaviour
     public void CheckIfShouldFlip(int xInput)
     {
         if (xInput != 0 && xInput != FacingDirection)
+        {
             Flip();
+        }
     }
     #endregion
 
@@ -167,14 +177,14 @@ public class Player : MonoBehaviour
 
         // Draw front wall checker
         Gizmos.color = CheckIsTouchingWall() ? Color.green : Color.red;
-        Gizmos.DrawLine(wallCheck.position, 
+        Gizmos.DrawLine(wallCheck.position,
             new Vector3(wallCheck.position.x + playerData.WallCheckDistace * FacingDirection, wallCheck.position.y, wallCheck.position.z));
-        
+
         // Draw back wall checker
         Gizmos.color = CheckIsTouchingWallBack() ? Color.blue : Color.magenta;
-        Gizmos.DrawLine(new Vector3(wallCheck.position.x, wallCheck.position.y, wallCheck.position.z), 
+        Gizmos.DrawLine(new Vector3(wallCheck.position.x, wallCheck.position.y, wallCheck.position.z),
             new Vector3(wallCheck.position.x + playerData.WallCheckDistace * -FacingDirection, wallCheck.position.y, wallCheck.position.z));
-        
+
         // Draw Ledge checker
         Gizmos.color = CheckIfTouchingLedge() ? Color.green : Color.red;
         Gizmos.DrawLine(ledgeCheck.position,
@@ -184,7 +194,7 @@ public class Player : MonoBehaviour
     {
         FacingDirection *= -1;
         transform.Rotate(0.0f, 180.0f, 0.0f);
-    } 
+    }
 
     /// <summary>
     /// Determine corner ledge position
@@ -212,6 +222,10 @@ public class Player : MonoBehaviour
         float timeToApex = playerData.MaxJumpTime / 2;
         playerData.Gravity = (-2 * playerData.MaxJumpHeight) / Mathf.Pow(timeToApex, 2);
         playerData.InitialJumpVelocity = (2 * playerData.MaxJumpHeight) / timeToApex;
+    }
+
+    public void SetUpDashVariables()
+    {
     }
     #endregion
 }

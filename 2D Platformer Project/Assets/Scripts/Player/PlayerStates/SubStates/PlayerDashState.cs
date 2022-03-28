@@ -1,78 +1,57 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerDashState : PlayerAbilityState
 {
-
-    public bool CanDash { get; private set; }
-
+    private float startDash;
     private float lastDashTime;
+
+    private bool canDash;
+    private bool isDashing = false;
 
     private Vector2 dashDirection;
     private Vector2 dashDirectionInput;
 
-
-    public PlayerDashState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animationBoolName) : 
+    public PlayerDashState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animationBoolName) :
         base(player, stateMachine, playerData, animationBoolName)
     {
     }
 
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
-
+    #region Override Methods
     public override void Enter()
     {
         base.Enter();
 
-        CanDash = false;
+        startDash = startTime + playerData.BeforeDashFreezeTime;
+        player.SetVelocityZero();
+
+        canDash = false;
 
         player.InputHandler.UseDashInput();
-
         player.JumpState.DecreaseAmountOfJumpsLeft();
-
-        dashDirection = Vector2.right * player.FacingDirection;
-        startTime = Time.time;
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-
-        if (player.CurrentVelocity.y > 0)
-        {
-            player.SetVelocityY(player.CurrentVelocity.y * playerData.DashEndMultiplierY);
-        }
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        //player.Animator.SetFloat(AnimationName.InAir.ToString(), player.CurrentVelocity.y);
-
-        if (!isExitingState)
+        if (!isDashing)
         {
-            dashDirectionInput = player.InputHandler.DashDirectionInput;
-            
+            DetermineDashDirection();
+        }
 
-            if (dashDirectionInput != Vector2.zero)
-            {
-                dashDirection = dashDirectionInput.normalized;
-            }
+        if (Time.time >= startTime + playerData.BeforeDashFreezeTime)
+        {
+            isDashing = true;
 
+            player.Animator.SetFloat("yVelocity", player.CurrentVelocity.y);
             player.CheckIfShouldFlip(Mathf.RoundToInt(dashDirection.x));
-            player.Rigidbody.drag = playerData.DashDrag;
 
-            player.SetVelocity(playerData.DashVelocity, dashDirection);
-
-            if (Time.time >= startTime + playerData.DashTime)
+            if (Time.time >= startDash + playerData.DashTime)
             {
-                player.Rigidbody.drag = 0f;
-                isAbilityDone = true;
+                ApplyEndDashGravity();
                 lastDashTime = Time.time;
+                isDashing = false;
+                SetAbilityDone();
             }
         }
     }
@@ -80,9 +59,36 @@ public class PlayerDashState : PlayerAbilityState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+
+        if (isDashing)
+        {
+            Dash();
+        }
     }
+    #endregion
 
-    public bool CheckIfCanDash() => CanDash && Time.time > lastDashTime + playerData.DashCooldown;
-
-    public void ResetCanDash() => CanDash = true;
+    #region Own Methods
+    private void Dash()
+    {
+        player.Rigidbody.AddForce(playerData.DashVelocity * dashDirection, ForceMode2D.Impulse);
+    }
+    private void DetermineDashDirection()
+    {
+        dashDirectionInput = player.InputHandler.DashDirectionInput;
+        if (dashDirectionInput != Vector2.zero)
+        {
+            dashDirection = dashDirectionInput.normalized;
+        }
+    }
+    private void ApplyEndDashGravity()
+    {
+        if (player.CurrentVelocity.y > 0)
+        {
+            //player.SetVelocityY(player.CurrentVelocity.y * playerData.DashEndMultiplierY);
+            player.Rigidbody.AddForce(player.CurrentVelocity.y * playerData.DashEndMultiplierY * Vector2.down, ForceMode2D.Impulse);
+        }
+    }
+    public bool CheckIfCanDash() => canDash && Time.time > lastDashTime + playerData.DashCooldown;
+    public void ResetCanDash() => canDash = true;
+    #endregion
 }

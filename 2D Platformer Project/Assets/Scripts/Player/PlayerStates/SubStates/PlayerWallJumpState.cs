@@ -6,6 +6,7 @@ public class PlayerWallJumpState : PlayerAbilityState
 {
     private int wallJumpDirection;
     private int xInput;
+    private int yInput;
 
     public PlayerWallJumpState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animationBoolName) : 
         base(player, stateMachine, playerData, animationBoolName)
@@ -16,35 +17,55 @@ public class PlayerWallJumpState : PlayerAbilityState
     {
         base.Enter();
 
-        xInput = player.InputHandler.NormalizedInputX;  // Determine player facing while walljumping
+        GetInput();
+
+        player.InAirState.StopWallJumpCoyoteTime();
+        DetermineWallJumpDrection(isTouchingWall);
+
 
         player.InputHandler.UseJumpInput();
-
         player.JumpState.DecreaseAmountOfJumpsLeft();
 
-        MakeWallJump(playerData.WallJumpVelocity, wallJumpDirection, playerData.WallJumpAngle);
-
-        player.CheckIfShouldFlip(xInput);
+        MakeWallJump(playerData.InitialJumpVelocity * playerData.WallJumpVelocityMultiplier, wallJumpDirection);
     }
 
 
     public override void LogicUpdate()
-
     {
         base.LogicUpdate();
+        GetInput();
 
+        player.CheckIfShouldFlip(xInput);
         player.Animator.SetFloat("yVelocity", player.CurrentVelocity.y);
 
-        if (Time.time >= startTime + playerData.WallJumpTime)
+        if (EndWallJumpCondition())
         {
-            isAbilityDone = true;
+            SetAbilityDone();
         }
     }
 
-    private void MakeWallJump(float velocity, int direction, Vector2 angle)
+    #region Own Methods
+    private void GetInput()
+    {
+        xInput = player.InputHandler.NormalizedInputX;
+        yInput = player.InputHandler.NormalizedInputY;
+    }
+
+    private void MakeWallJump(float velocity, int direction)
     {
         player.SetVelocityZero();
-        player.Rigidbody.AddForce(velocity * direction * new Vector2(angle.x, angle.y * Mathf.Sign(direction)), ForceMode2D.Impulse);
+        Vector2 angle;
+        if(yInput == 1 && (xInput == 0 || xInput != wallJumpDirection))
+        {
+            angle = playerData.WallJumpUpAngle;
+        }
+        else
+        {
+            angle = playerData.WallJumpOffAngle;
+        }
+
+        player.Rigidbody.AddForce(velocity * direction * new Vector2(angle.x, angle.y * Mathf.Sign(direction)).normalized, ForceMode2D.Impulse);
+        player.InAirState.SetIsJumping(true);
     }
 
     /// <summary>
@@ -52,5 +73,8 @@ public class PlayerWallJumpState : PlayerAbilityState
     /// </summary>
     /// <param name="isTouchingWall"></param>
     public void DetermineWallJumpDrection(bool isTouchingWall) => wallJumpDirection = isTouchingWall ? -player.FacingDirection : player.FacingDirection;
+
+    private bool EndWallJumpCondition() => Time.time >= startTime + playerData.WallJumpTime;
+    #endregion
 
 }

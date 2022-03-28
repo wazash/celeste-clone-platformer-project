@@ -41,7 +41,15 @@ public class PlayerData : ScriptableObject
     [Range(0f, 1.0f), Tooltip("Factor determining jumping velocity reduction on release jump button")]
     public float JumpVelocityReductionFactor = 0.1f;
 
+    [Header("Wall Juming")]
+    [Range(0f, 1f)]
+    public float WallJumpVelocityMultiplier = 0.5f;
+    public float WallJumpTime = 0.3f;
+    public Vector2 WallJumpOffAngle = new Vector2(1, 2);
+    public Vector2 WallJumpUpAngle = new Vector2(0.5f, 2f);
+
     [Header("Dashing")]
+    public float BeforeDashFreezeTime = 0.05f;
     public float DashVelocity = 12;
     public int AmountOfDashes = 1;
     public float DashCooldown = 0.5f;
@@ -50,13 +58,6 @@ public class PlayerData : ScriptableObject
     [Range(0.0f, 1.0f)]
     public float DashEndMultiplierY = 0.2f;
     public float DistanceBetweenAfterImages = 0.5f;
-
-
-    [Header("Wall Juming")]
-    public float WallJumpVelocity = 15f;
-    public float WallJumpTime = 0.3f;
-    public Vector2 WallJumpAngle = new Vector2(1, 2);
-
 
     [Header("Wall Sliding")]
     [Range(0f, 10f)]

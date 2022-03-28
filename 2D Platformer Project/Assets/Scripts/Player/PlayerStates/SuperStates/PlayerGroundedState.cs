@@ -10,6 +10,7 @@ public class PlayerGroundedState : PlayerState
     private bool jumpInput;
     private bool grabWallInput;
     private bool dashInput;
+    private Vector2 dashDirectionInput;
 
     // Checkers
     private bool isGrounded;
@@ -47,7 +48,6 @@ public class PlayerGroundedState : PlayerState
 
         player.CheckIfShouldFlip(xInput);
 
-
         #region CHANGE STATES
         if (jumpInput && player.JumpState.CanJump())
         {
@@ -55,14 +55,13 @@ public class PlayerGroundedState : PlayerState
         }
         else if (!isGrounded)
         {
-            player.InAirState.StartCoyoteTime(); // Start coyote timer
             stateMachine.ChangeState(player.InAirState);    // Go to InAir state
         }
         else if (grabWallInput && isTouchingWall)
         {
             stateMachine.ChangeState(player.WallGrabState);
         }
-        else if (dashInput && player.DashState.CheckIfCanDash() && player.InputHandler.DashDirectionInput != Vector2.zero)
+        else if (dashInput && player.DashState.CheckIfCanDash() && dashDirectionInput != Vector2.zero)
         {
             stateMachine.ChangeState(player.DashState);
         } 
@@ -87,6 +86,7 @@ public class PlayerGroundedState : PlayerState
         jumpInput = player.InputHandler.JumpInput;
         grabWallInput = player.InputHandler.GrabWallInput;
         dashInput = player.InputHandler.DashInput;
+        dashDirectionInput = player.InputHandler.DashDirectionInput;
     }
 
     private void ApplyGroundedGravity(float groundedGravity)

@@ -23,15 +23,15 @@ public class PlayerState
     public virtual void Enter()
     {
         DoChecks();
+        isExitingState = false;
         player.Animator.SetBool(animationBoolName, true); // Start playing animation
         startTime = Time.time;  // Start counting enter time
-        isExitingState = false;
     }
 
     public virtual void Exit()
     {
-        player.Animator.SetBool(animationBoolName, false);  // Stop playing animation
         isExitingState = true;
+        player.Animator.SetBool(animationBoolName, false);  // Stop playing animation
     }
 
     public virtual void LogicUpdate()

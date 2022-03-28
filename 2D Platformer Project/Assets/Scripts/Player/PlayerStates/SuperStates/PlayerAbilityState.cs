@@ -6,9 +6,10 @@ public class PlayerAbilityState : PlayerState
 {
     protected bool isAbilityDone;
 
-    private bool isGrounded;
+    protected bool isGrounded;
+    protected bool isTouchingWall;
 
-    public PlayerAbilityState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animationBoolName) : 
+    public PlayerAbilityState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animationBoolName) :
         base(player, stateMachine, playerData, animationBoolName)
     {
     }
@@ -18,6 +19,7 @@ public class PlayerAbilityState : PlayerState
         base.DoChecks();
 
         isGrounded = player.CheckIsGrounded();
+        isTouchingWall = player.CheckIsTouchingWall();
     }
 
     public override void Enter()
@@ -25,11 +27,6 @@ public class PlayerAbilityState : PlayerState
         base.Enter();
 
         isAbilityDone = false;
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
     }
 
     public override void LogicUpdate()
@@ -49,8 +46,6 @@ public class PlayerAbilityState : PlayerState
         }
     }
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
+    public void SetAbilityDone() => isAbilityDone = true;
+
     }
-}

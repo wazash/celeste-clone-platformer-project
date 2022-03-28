@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191c32a5c731586418d4ddcb56bcf40e, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  Gravity: -35.555553
+  Gravity: -28.40237
   GroundedGravity: -0.05
   MovementVelocity: 5.5
   Acceleration: 16
@@ -20,23 +20,25 @@ MonoBehaviour:
   VelocityPower: 0.9
   MinGroundedVelocityX: 0.01
   MinGroundedVelocityY: 0.01
-  MaxJumpHeight: 1.6
-  InitialJumpVelocity: 10.666666
-  MaxJumpTime: 0.6
+  MaxJumpHeight: 1.5
+  InitialJumpVelocity: 9.230769
+  MaxJumpTime: 0.65
   AmountOfJumps: 1
   CoyoteTime: 0.1
   MaxFaliingSpeed: 7
-  JumpVelocityReductionFactor: 0.65
-  DashVelocity: 15
+  JumpVelocityReductionFactor: 0.35
+  WallJumpVelocityMultiplier: 0.85
+  WallJumpTime: 0.1
+  WallJumpOffAngle: {x: 1, y: 1}
+  WallJumpUpAngle: {x: 0.5, y: 2}
+  BeforeDashFreezeTime: 0.05
+  DashVelocity: 2.25
   AmountOfDashes: 1
   DashCooldown: 0.5
   DashTime: 0.15
   DashDrag: 10
   DashEndMultiplierY: 0.5
   DistanceBetweenAfterImages: 0.5
-  WallJumpVelocity: 3
-  WallJumpTime: 0.1
-  WallJumpAngle: {x: 1, y: 2}
   WallSlideVelocity: 2
   WallClimbVelocity: 3
   StartOffSet: {x: 0.25, y: 0.25}
