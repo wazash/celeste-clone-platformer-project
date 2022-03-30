@@ -185,9 +185,9 @@ GameObject:
   - component: {fileID: 2483931940027751294}
   - component: {fileID: 805313658}
   - component: {fileID: 2483931940027751292}
-  - component: {fileID: 8374512372776052224}
-  - component: {fileID: 1546411828}
   - component: {fileID: 1546411829}
+  - component: {fileID: 1546411828}
+  - component: {fileID: 8374512372776052224}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -294,37 +294,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8374512372776052224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2483931940027751289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee3cbfb4392a3404cae4f7cfc18aebd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: dd309a12fd0fc73409c4e010cb163c2d, type: 2}
-  groundCheck: {fileID: 2483931939359396225}
-  wallCheck: {fileID: 2483931938782984827}
-  ledgeCheck: {fileID: 517247865}
---- !u!114 &1546411828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2483931940027751289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b031d409e335ddf45aa13f5fd30e374c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputHoldTime: 0.2
-  useThreshold: 1
-  stickThreshold: 0.5
 --- !u!114 &1546411829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,6 +404,41 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1546411828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2483931940027751289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b031d409e335ddf45aa13f5fd30e374c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputHoldTime: 0.2
+  useThreshold: 1
+  stickThreshold: 0.5
+--- !u!114 &8374512372776052224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2483931940027751289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3cbfb4392a3404cae4f7cfc18aebd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: dd309a12fd0fc73409c4e010cb163c2d, type: 2}
+  groundCheck: {fileID: 2483931939359396225}
+  wallCheck: {fileID: 2483931938782984827}
+  ledgeCheck: {fileID: 517247865}
+  <Particles>k__BackingField:
+    LandingPS: {fileID: 0}
+    JumpingPS: {fileID: 0}
+    DeathPS: {fileID: 0}
 --- !u!1 &6102918966278689954
 GameObject:
   m_ObjectHideFlags: 0

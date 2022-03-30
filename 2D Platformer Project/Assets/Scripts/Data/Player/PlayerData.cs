@@ -5,12 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Player Data", menuName = "Data/Player/Base Data")]
 public class PlayerData : ScriptableObject
 {
+    #region Gravity
     [Header("Gravity")]
     [HideInInspector]
     public float Gravity;
     [HideInInspector]
     public float GroundedGravity = -0.01f;
+    #endregion
 
+    #region Moving State
     [Header("Moving")]
     [Tooltip("Maximum player grounded speed")]
     public float MovementVelocity = 5.0f;
@@ -24,7 +27,9 @@ public class PlayerData : ScriptableObject
     public float MinGroundedVelocityX = 0.01f;
     [Range(0f, 0.1f), Tooltip("If player falling moving slower, his velocity will be set at 0")]
     public float MinGroundedVelocityY = 0.01f;
+    #endregion
 
+    #region Jumping State
     [Header("Jumping")]
     [Tooltip("How high player can jump by default")]
     public float MaxJumpHeight;
@@ -40,14 +45,18 @@ public class PlayerData : ScriptableObject
     public float MaxFaliingSpeed = 10;
     [Range(0f, 1.0f), Tooltip("Factor determining jumping velocity reduction on release jump button")]
     public float JumpVelocityReductionFactor = 0.1f;
+    #endregion
 
+    #region Wall Jumping State
     [Header("Wall Juming")]
     [Range(0f, 1f)]
     public float WallJumpVelocityMultiplier = 0.5f;
     public float WallJumpTime = 0.3f;
     public Vector2 WallJumpOffAngle = new Vector2(1, 2);
     public Vector2 WallJumpUpAngle = new Vector2(0.5f, 2f);
+    #endregion
 
+    #region Dashing State
     [Header("Dashing")]
     public float BeforeDashFreezeTime = 0.05f;
     public float DashVelocity = 12;
@@ -58,7 +67,9 @@ public class PlayerData : ScriptableObject
     [Range(0.0f, 1.0f)]
     public float DashEndMultiplierY = 0.2f;
     public float DistanceBetweenAfterImages = 0.5f;
+    #endregion
 
+    #region Wall States
     [Header("Wall Sliding")]
     [Range(0f, 10f)]
     public float WallSlideVelocity = 2.5f;
@@ -69,7 +80,9 @@ public class PlayerData : ScriptableObject
     [Header("Ledge Climing")]
     public Vector2 StartOffSet;
     public Vector2 StopOffSet;
+    #endregion
 
+    #region Chekers
     [Header("Checkers Variables")]
     [Range(0.0f, 1.0f)]
     public float WallCheckDistace = 0.2f;
@@ -78,6 +91,10 @@ public class PlayerData : ScriptableObject
     public float GroundCheckWidth = 0.3f;
     public float GroundCheckHeight = 0.3f;
     public LayerMask WhatIsGround;
+    #endregion
+
+    [Header("Other")]
+    public Vector2 CurrentSpawnpointPosition;
 }
 
 /// <summary>

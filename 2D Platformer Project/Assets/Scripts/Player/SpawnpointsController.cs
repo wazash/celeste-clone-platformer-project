@@ -1,16 +1,14 @@
-using Assets.Scripts.Data.Player;
 using UnityEngine;
 
 public class SpawnpointsController : MonoBehaviour
 {
     [SerializeField]
-    private OldPlayerData playerData;
-
+    private PlayerData playerData;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && playerData != null)
+        if (collision.CompareTag("Player"))
         {
-            playerData.CurrentSpawnPoint = this.transform;
+            playerData.CurrentSpawnpointPosition = transform.position;
         }
     }
 }

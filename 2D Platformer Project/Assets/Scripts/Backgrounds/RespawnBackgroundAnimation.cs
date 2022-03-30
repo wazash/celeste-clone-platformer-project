@@ -1,4 +1,3 @@
-using Assets.Scripts.StateMachine.PlayerStateMachine;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,14 +19,12 @@ public class RespawnBackgroundAnimation : MonoBehaviour
 
     private void OnEnable()
     {
-        //PlayerSM.OnPlayerDeath += PlayerDeathAnimation;
-        EventsManager.OnPlayerDeath.AddListener(PlayerDeathAnimationBG);
+        EventsManager.OnBGRespawn.AddListener(PlayerDeathAnimationBG);
     }
 
     private void OnDisable()
     {
-        //PlayerSM.OnPlayerDeath -= PlayerDeathAnimation;
-        EventsManager.OnPlayerDeath.RemoveListener(PlayerDeathAnimationBG);
+        EventsManager.OnBGRespawn.RemoveListener(PlayerDeathAnimationBG);
     }
 
     public void PlayerDeathAnimationBG()
@@ -61,7 +58,6 @@ public class RespawnBackgroundAnimation : MonoBehaviour
             });
         });
     }
-
 }
 
 public enum AnimType

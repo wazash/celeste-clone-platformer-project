@@ -10,6 +10,10 @@ public static class EventsManager
     // Player Events
     public static readonly EventBase<bool> OnPlayerControllPossibilityChanged = new EventBase<bool>();
     public static readonly EventBase OnPlayerDeath = new EventBase();
+    public static readonly EventBase OnPlayerRespawn = new EventBase();
+
+    // BG events
+    public static readonly EventBase OnBGRespawn = new EventBase();
 
     // Keys events
     public static readonly EventBase<int> OnKeyCollected = new EventBase<int>();

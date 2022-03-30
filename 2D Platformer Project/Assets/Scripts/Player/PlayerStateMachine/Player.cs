@@ -1,10 +1,14 @@
+using DG.Tweening;
 using UnityEngine;
+using System.Collections;
 
 [System.Serializable]
 public struct PlayerParticles
 {
     public ParticleSystem LandingPS;
     public ParticleSystem JumpingPS;
+    public ParticleSystem DeathPS;
+    public ParticleSystem SpawnSP;
 }
 
 
@@ -27,6 +31,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private PlayerData playerData;
+    public PlayerData PlayerData { get { return playerData; } }
     #endregion
 
     #region Components
@@ -49,6 +54,8 @@ public class Player : MonoBehaviour
     public int FacingDirection { get; private set; } = 1; // -1 - left, 1 - right 
 
     [field: SerializeField] public PlayerParticles Particles { get; private set; }
+
+    public bool IsAlive { get; private set; } = true;
 
     private Vector2 workspace;
     #endregion
@@ -93,13 +100,19 @@ public class Player : MonoBehaviour
     {
         // Calculate Logic
         CurrentVelocity = Rigidbody.velocity;
-        StateMachine.CurrentState.LogicUpdate();
+        if (IsAlive)
+        {
+            StateMachine.CurrentState.LogicUpdate();
+        }
     }
 
     private void FixedUpdate()
     {
         // Calculate Physics
-        StateMachine.CurrentState.PhysicsUpdate();
+        if (IsAlive)
+        {
+            StateMachine.CurrentState.PhysicsUpdate();
+        }
     }
     #endregion
 
@@ -224,8 +237,10 @@ public class Player : MonoBehaviour
         playerData.InitialJumpVelocity = (2 * playerData.MaxJumpHeight) / timeToApex;
     }
 
-    public void SetUpDashVariables()
-    {
-    }
+    
+
+
+    public bool SetIsAlive(bool value) => IsAlive = value;
+
     #endregion
 }
