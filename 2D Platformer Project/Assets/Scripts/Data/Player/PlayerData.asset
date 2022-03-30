@@ -31,7 +31,7 @@ MonoBehaviour:
   WallJumpTime: 0.1
   WallJumpOffAngle: {x: 1, y: 1}
   WallJumpUpAngle: {x: 0.5, y: 2}
-  BeforeDashFreezeTime: 0.05
+  BeforeDashFreezeTime: 0.1
   DashVelocity: 2.25
   AmountOfDashes: 1
   DashCooldown: 0.5
@@ -50,3 +50,4 @@ MonoBehaviour:
   WhatIsGround:
     serializedVersion: 2
     m_Bits: 64
+  CurrentSpawnpointPosition: {x: -8.940001, y: -1.5350003}
