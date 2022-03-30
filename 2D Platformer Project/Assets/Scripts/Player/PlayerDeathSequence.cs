@@ -34,7 +34,7 @@ public class PlayerDeathSequence : MonoBehaviour
 
     private IEnumerator PlayerDeathSeq()
     {
-        player.SetIsAlive(false);
+        player.SetIsControllable(false);
         player.SetVelocityZero();
 
         transform.DOScale(0.0f, 0.25f).OnComplete(() => player.Particles.DeathPS.Play());

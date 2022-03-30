@@ -17,12 +17,16 @@ public class Key : MonoBehaviour
 
             // Execute order 66 (player picked up key)
             EventsManager.OnKeyCollected.Invoke(DoorsToOpenID);
+
             // play sound
             // play particle
             // add points
 
             if (SetPlayerPositionToKeyPosition)
+            {
                 collision.transform.position = transform.position;
+                collision.GetComponent<Player>().SetVelocityZero();
+            }
         }
     }
 

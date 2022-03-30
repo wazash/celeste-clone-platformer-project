@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
 
     [field: SerializeField] public PlayerParticles Particles { get; private set; }
 
-    public bool IsAlive { get; private set; } = true;
+    public bool IsControllable { get; private set; } = true;
 
     private Vector2 workspace;
     #endregion
@@ -100,7 +100,7 @@ public class Player : MonoBehaviour
     {
         // Calculate Logic
         CurrentVelocity = Rigidbody.velocity;
-        if (IsAlive)
+        if (IsControllable)
         {
             StateMachine.CurrentState.LogicUpdate();
         }
@@ -109,10 +109,20 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         // Calculate Physics
-        if (IsAlive)
+        if (IsControllable)
         {
             StateMachine.CurrentState.PhysicsUpdate();
         }
+    }
+
+    private void OnEnable()
+    {
+        EventsManager.OnPlayerControllPossibilityChanged.AddListener(SetIsControllable);
+    }
+
+    private void OnDisable()
+    {
+        EventsManager.OnPlayerControllPossibilityChanged.RemoveListener(SetIsControllable);
     }
     #endregion
 
@@ -237,10 +247,7 @@ public class Player : MonoBehaviour
         playerData.InitialJumpVelocity = (2 * playerData.MaxJumpHeight) / timeToApex;
     }
 
-    
-
-
-    public bool SetIsAlive(bool value) => IsAlive = value;
+    public void SetIsControllable(bool value) => IsControllable = value;
 
     #endregion
 }

@@ -37,6 +37,6 @@ public class PlayerRespawnSequence : MonoBehaviour
         yield return new WaitForSeconds(player.Particles.SpawnSP.main.duration + particleDurationOffset);
 
         // start player
-        transform.DOScale(1.0f, 0.25f).OnComplete(() => player.SetIsAlive(true));
+        transform.DOScale(1.0f, 0.25f).OnComplete(() => player.SetIsControllable(true));
     }
 }

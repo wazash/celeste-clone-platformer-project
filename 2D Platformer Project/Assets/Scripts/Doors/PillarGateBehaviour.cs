@@ -22,7 +22,7 @@ public class PillarGateBehaviour : MonoBehaviour
     private int shakeVibratio = 20;
 
     private Transform gateVisualTransform;
-    private CinemachineVirtualCamera doorsVirtualCamera;
+    [SerializeField]private CinemachineVirtualCamera doorsVirtualCamera;
 
     private void Start()
     {

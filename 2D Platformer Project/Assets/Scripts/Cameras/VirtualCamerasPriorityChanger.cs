@@ -1,19 +1,16 @@
 using Cinemachine;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class VirtualCamerasManager : MonoBehaviour
+public class VirtualCamerasPriorityChanger : MonoBehaviour
 {
     private void OnEnable()
     {
-        VerticalDoors.OnPriorityCameraChaged += ChangeCameraPriority;
+        EventsManager.OnCameraPriorityChanged.AddListener(ChangeCameraPriority);
     }
 
     private void OnDisable()
     {
-        VerticalDoors.OnPriorityCameraChaged -= ChangeCameraPriority;
+        EventsManager.OnCameraPriorityChanged.RemoveListener(ChangeCameraPriority);
     }
 
     public void ChangeCameraPriority(CinemachineVirtualCamera vCamera, int priorityValue)
