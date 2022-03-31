@@ -16,6 +16,8 @@ public class MainMenuLayoutsManager : MonoBehaviour
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
+
+        SetButtonsInactive();
     }
 
     public void ShowLayout()
@@ -23,11 +25,11 @@ public class MainMenuLayoutsManager : MonoBehaviour
         SetButtonsActive();
         if(clicksCounter < 1)
         {
-            rectTransform.DOAnchorPos(onPosition, duration);   
+            rectTransform.DOAnchorPos(onPosition, duration).SetEase(Ease.OutBack);   
         }
         else
         {
-            rectTransform.DOAnchorPos(onPosition, duration).SetDelay(duration);
+            rectTransform.DOAnchorPos(onPosition, duration).SetDelay(duration).SetEase(Ease.OutBack);
         }
 
         clicksCounter++;
@@ -36,7 +38,7 @@ public class MainMenuLayoutsManager : MonoBehaviour
     public void HideLayout()
     {
         SetButtonsInactive();
-        rectTransform.DOAnchorPos(offPosition, duration);
+        rectTransform.DOAnchorPos(offPosition, duration).SetEase(Ease.InBack);   
     }
 
     private void SetButtonsInactive()
