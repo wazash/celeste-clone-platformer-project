@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
 
     [field: SerializeField] public PlayerParticles Particles { get; private set; }
 
-    public bool IsControllable { get; private set; } = true;
+    public bool IsControllable { get; private set; } = false;
 
     private Vector2 workspace;
     #endregion

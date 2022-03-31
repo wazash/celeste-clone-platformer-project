@@ -11,6 +11,7 @@ public class LoadLevelOnClick : MonoBehaviour
 
     public void LoadScene()
     {
+        // Make screen black, then invoke OnLoadLevel event
         screenCover.DOFade(1, duration.Value).OnComplete(() => EventsManager.OnLoadLevel.Invoke(sceneIndex));
     }
 }

@@ -28,4 +28,5 @@ public static class EventsManager
 
     // SceneManger events
     public static readonly EventBase<int> OnLoadLevel = new EventBase<int>();
+    public static readonly EventBase OnLevelLoaded = new EventBase();
 }

@@ -22,8 +22,10 @@ public class ShowMainMenuButtons : MonoBehaviour
 
     void Start()
     {
-        delay = fadeCoverDelay.Value + fadeCoverDuration.Value;
+        // Calculate delay based on startinf fade duration
+        delay = fadeCoverDelay.Value + fadeCoverDuration.Value; 
 
+        // Push buttons one by one
         buttons[0].GetComponent<RectTransform>().DOAnchorPosX(endPositionX, duration.Value).SetEase(Ease.OutBack).SetDelay(delay).OnComplete(() =>
         {
             buttons[1].GetComponent<RectTransform>().DOAnchorPosX(endPositionX, duration.Value).SetEase(Ease.OutBack).OnComplete(() =>

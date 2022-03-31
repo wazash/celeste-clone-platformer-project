@@ -1076,8 +1076,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 631303793}
-        m_TargetAssemblyTypeName: LoadForestLevel, Assembly-CSharp
-        m_MethodName: LoadForest
+        m_TargetAssemblyTypeName: LoadLevelOnClick, Assembly-CSharp
+        m_MethodName: LoadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

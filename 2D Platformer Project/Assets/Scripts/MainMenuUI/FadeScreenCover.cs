@@ -15,6 +15,6 @@ public class FadeScreenCover : MonoBehaviour
     }
     void Start()
     {
-        image.DOFade(0, fadingDuration.Value).SetDelay(startDelay.Value);
+        image.DOFade(0, fadingDuration.Value).SetDelay(startDelay.Value).OnComplete(() => EventsManager.OnPlayerControllPossibilityChanged?.Invoke(true));
     }
 }

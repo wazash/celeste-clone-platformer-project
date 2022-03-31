@@ -17,18 +17,23 @@ public class MainMenuLayoutsManager : MonoBehaviour
     {
         rectTransform = GetComponent<RectTransform>();
 
-        SetButtonsInactive();
+        // Set butons active at the start
+        SetButtonsStatus(false);
     }
 
     public void ShowLayout()
     {
-        SetButtonsActive();
+        // Set butons active
+        SetButtonsStatus(true);
+
         if(clicksCounter < 1)
         {
+            // If buttons were not clicked, push menu layout without delay
             rectTransform.DOAnchorPosX(onPosition.Value, duration).SetEase(Ease.OutBack);   
         }
         else
         {
+            // Set delay if is not firt button click
             rectTransform.DOAnchorPosX(onPosition.Value, duration).SetDelay(duration).SetEase(Ease.OutBack);
         }
 
@@ -37,27 +42,20 @@ public class MainMenuLayoutsManager : MonoBehaviour
 
     public void HideLayout()
     {
-        SetButtonsInactive();
+        // Set buttons inactive
+        SetButtonsStatus(false);
+
+        // Hide layout
         rectTransform.DOAnchorPosX(offPosition.Value, duration).SetEase(Ease.InBack);   
     }
 
-    private void SetButtonsInactive()
+    private void SetButtonsStatus(bool value)
     {
         Button[] buttons = GetComponentsInChildren<Button>();
 
         foreach (var button in buttons)
         {
-            button.enabled = false;
-        }
-    }
-
-    private void SetButtonsActive()
-    {
-        Button[] buttons = GetComponentsInChildren<Button>();
-
-        foreach (var button in buttons)
-        {
-            button.enabled = true;
+            button.enabled = value;
         }
     }
 }
