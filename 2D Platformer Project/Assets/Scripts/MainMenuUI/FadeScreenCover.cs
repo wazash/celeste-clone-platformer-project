@@ -15,6 +15,7 @@ public class FadeScreenCover : MonoBehaviour
     }
     void Start()
     {
+        // Make screen cover transparent, then invoke event enabling controll character
         image.DOFade(0, fadingDuration.Value).SetDelay(startDelay.Value).OnComplete(() => EventsManager.OnPlayerControllPossibilityChanged?.Invoke(true));
     }
 }
