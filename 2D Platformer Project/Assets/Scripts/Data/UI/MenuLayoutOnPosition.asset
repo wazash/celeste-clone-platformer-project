@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b77463dbf8c7d84aaf24a6a51723589, type: 3}
   m_Name: MenuLayoutOnPosition
   m_EditorClassIdentifier: 
-  value: 0
+  value: -50

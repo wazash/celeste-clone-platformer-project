@@ -25,4 +25,7 @@ public static class EventsManager
 
     // Win events
     public static readonly EventBase OnWinObjectCollected = new EventBase();
+
+    // SceneManger events
+    public static readonly EventBase<int> OnLoadLevel = new EventBase<int>();
 }

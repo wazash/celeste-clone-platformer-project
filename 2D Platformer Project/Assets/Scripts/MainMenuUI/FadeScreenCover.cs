@@ -7,6 +7,7 @@ public class FadeScreenCover : MonoBehaviour
     private Image image;
     public FloatReference fadingDuration;
     public FloatReference startDelay;
+
     private void Awake()
     {
         image = GetComponent<Image>();

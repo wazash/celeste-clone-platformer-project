@@ -1,4 +1,3 @@
-using Assets.Scripts.Data.Player;
 using UnityEngine;
 
 public class PlayerState

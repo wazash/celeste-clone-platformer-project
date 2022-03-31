@@ -1,6 +1,3 @@
-using Assets.Scripts.Data.Player;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerGroundedState : PlayerState
@@ -16,7 +13,7 @@ public class PlayerGroundedState : PlayerState
     private bool isGrounded;
     private bool isTouchingWall;
 
-    public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animationBoolName) : 
+    public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animationBoolName) :
         base(player, stateMachine, playerData, animationBoolName)
     {
     }
@@ -26,8 +23,8 @@ public class PlayerGroundedState : PlayerState
         base.DoChecks();
 
         // Execute checkers
-        isGrounded = player.CheckIsGrounded();  
-        isTouchingWall = player.CheckIsTouchingWall();  
+        isGrounded = player.CheckIsGrounded();
+        isTouchingWall = player.CheckIsTouchingWall();
     }
 
     public override void Enter()
@@ -35,8 +32,8 @@ public class PlayerGroundedState : PlayerState
         base.Enter();
 
         // Reset Abilities
-        player.JumpState.ResetAmountOfJumpsLeft();  
-        player.DashState.ResetCanDash();    
+        player.JumpState.ResetAmountOfJumpsLeft();
+        player.DashState.ResetCanDash();
     }
 
     public override void LogicUpdate()
@@ -64,7 +61,7 @@ public class PlayerGroundedState : PlayerState
         else if (dashInput && player.DashState.CheckIfCanDash() && dashDirectionInput != Vector2.zero)
         {
             stateMachine.ChangeState(player.DashState);
-        } 
+        }
         #endregion
     }
 
