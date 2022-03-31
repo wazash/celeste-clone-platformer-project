@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class MainMenuLayoutsManager : MonoBehaviour
 {
-    [SerializeField] private Vector3 offPosition;
-    [SerializeField] private Vector3 onPosition;
+    [SerializeField] private FloatReference offPosition;
+    [SerializeField] private FloatReference onPosition;
 
     private RectTransform rectTransform;
 
@@ -25,11 +25,11 @@ public class MainMenuLayoutsManager : MonoBehaviour
         SetButtonsActive();
         if(clicksCounter < 1)
         {
-            rectTransform.DOAnchorPos(onPosition, duration).SetEase(Ease.OutBack);   
+            rectTransform.DOAnchorPosX(onPosition.Value, duration).SetEase(Ease.OutBack);   
         }
         else
         {
-            rectTransform.DOAnchorPos(onPosition, duration).SetDelay(duration).SetEase(Ease.OutBack);
+            rectTransform.DOAnchorPosX(onPosition.Value, duration).SetDelay(duration).SetEase(Ease.OutBack);
         }
 
         clicksCounter++;
@@ -38,7 +38,7 @@ public class MainMenuLayoutsManager : MonoBehaviour
     public void HideLayout()
     {
         SetButtonsInactive();
-        rectTransform.DOAnchorPos(offPosition, duration).SetEase(Ease.InBack);   
+        rectTransform.DOAnchorPosX(offPosition.Value, duration).SetEase(Ease.InBack);   
     }
 
     private void SetButtonsInactive()
