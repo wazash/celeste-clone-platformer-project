@@ -9,7 +9,7 @@ public class LoadLevelOnClick : MonoBehaviour
     [SerializeField] private FloatReference duration;
     [SerializeField] private int sceneIndex;
 
-    public void LoadForest()
+    public void LoadScene()
     {
         screenCover.DOFade(1, duration.Value).OnComplete(() => EventsManager.OnLoadLevel.Invoke(sceneIndex));
     }
