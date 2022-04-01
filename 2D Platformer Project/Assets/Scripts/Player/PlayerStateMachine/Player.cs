@@ -1,6 +1,4 @@
-using DG.Tweening;
 using UnityEngine;
-using System.Collections;
 
 [System.Serializable]
 public struct PlayerParticles
@@ -10,7 +8,6 @@ public struct PlayerParticles
     public ParticleSystem DeathPS;
     public ParticleSystem SpawnSP;
 }
-
 
 public class Player : MonoBehaviour
 {

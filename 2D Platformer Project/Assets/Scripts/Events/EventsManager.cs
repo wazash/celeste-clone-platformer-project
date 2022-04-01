@@ -12,6 +12,8 @@ public static class EventsManager
     public static readonly EventBase OnPlayerDeath = new EventBase();
     public static readonly EventBase OnPlayerRespawn = new EventBase();
 
+    public static readonly EventBase<AudioClip> OnPlayeySfxPlay = new EventBase<AudioClip>();
+
     // BG events
     public static readonly EventBase OnBGRespawn = new EventBase();
 

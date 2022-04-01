@@ -20,6 +20,9 @@ public class PlayerJumpState : PlayerAbilityState
         // Playe particles
         player.Particles.JumpingPS.Play();
 
+        // Play sound
+        EventsManager.OnPlayeySfxPlay.Invoke(playerData.PlayerSounds.JumpClip);
+
         player.InputHandler.UseJumpInput();
         player.InAirState.SetIsJumping(true);
 

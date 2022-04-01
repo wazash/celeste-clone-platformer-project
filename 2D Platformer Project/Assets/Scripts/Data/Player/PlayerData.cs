@@ -93,6 +93,12 @@ public class PlayerData : ScriptableObject
     public LayerMask WhatIsGround;
     #endregion
 
+    #region SFX
+    [Header("Sounds Effects")]
+    public PlayerSFX PlayerSounds;
+
+    #endregion
+
     [Header("Other")]
     public Vector2 CurrentSpawnpointPosition;
 }
@@ -109,4 +115,11 @@ public enum AnimationName
     WallSlide,
     WallClimb,
     Ledge
+}
+
+[System.Serializable]
+public struct PlayerSFX
+{
+    public AudioClip JumpClip;
+    public AudioClip LandClip;
 }
