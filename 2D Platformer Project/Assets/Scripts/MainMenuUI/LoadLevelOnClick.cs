@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using UnityEngine.SceneManagement;
 
 public class LoadLevelOnClick : MonoBehaviour
 {
@@ -11,6 +10,7 @@ public class LoadLevelOnClick : MonoBehaviour
 
     public void LoadScene()
     {
+        EventsManager.OnMusicFade.Invoke(0, duration.Value);
         // Make screen black, then invoke OnLoadLevel event
         screenCover.DOFade(1, duration.Value).OnComplete(() => EventsManager.OnLoadLevel.Invoke(sceneIndex));
     }

@@ -122,4 +122,5 @@ public struct PlayerSFX
 {
     public AudioClip JumpClip;
     public AudioClip LandClip;
+    public AudioClip FootstepsClip;
 }

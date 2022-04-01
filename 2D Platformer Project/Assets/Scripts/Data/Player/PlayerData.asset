@@ -50,4 +50,8 @@ MonoBehaviour:
   WhatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  CurrentSpawnpointPosition: {x: -8.940001, y: -1.5350003}
+  PlayerSounds:
+    JumpClip: {fileID: 8300000, guid: 0ce35170394ec444bbbad975248f7f88, type: 3}
+    LandClip: {fileID: 8300000, guid: 239a0de8b5b2bed41abb84883a7bd8f9, type: 3}
+    FootstepsClip: {fileID: 8300000, guid: e62db8b70911ebe40a582352ddc54eef, type: 3}
+  CurrentSpawnpointPosition: {x: 9.02, y: 1.5925002}

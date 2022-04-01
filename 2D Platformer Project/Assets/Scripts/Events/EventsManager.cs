@@ -17,6 +17,9 @@ public static class EventsManager
     // BG events
     public static readonly EventBase OnBGRespawn = new EventBase();
 
+    // Sounds events
+    public static readonly EventBase<float, float> OnMusicFade = new EventBase<float, float>();
+
     // Keys events
     public static readonly EventBase<int> OnKeyCollected = new EventBase<int>();
 

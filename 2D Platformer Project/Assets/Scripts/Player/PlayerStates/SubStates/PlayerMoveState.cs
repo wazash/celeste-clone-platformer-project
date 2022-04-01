@@ -12,6 +12,8 @@ public class PlayerMoveState : PlayerGroundedState
     {
         base.LogicUpdate();
 
+        EventsManager.OnPlayeySfxPlay.Invoke(playerData.PlayerSounds.FootstepsClip);
+
         // Change state to IdleState
         if (!isExitingState)
         {
