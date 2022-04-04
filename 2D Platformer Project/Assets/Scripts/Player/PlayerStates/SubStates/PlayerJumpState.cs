@@ -10,9 +10,9 @@ public class PlayerJumpState : PlayerAbilityState
         AmountOfJumpsLeft = playerData.AmountOfJumps;
     }
 
-    public override void Enter()
+    public override void PhysicsUpdate()
     {
-        base.Enter();
+        base.PhysicsUpdate();
 
         // Make jump
         Jump();
