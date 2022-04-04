@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInAirState : PlayerState
@@ -23,8 +21,6 @@ public class PlayerInAirState : PlayerState
 
     private bool coyoteTime;
     private bool wallJumpCoyoteTime;
-
-    int frames;
     #endregion
 
     #region CONSTRUCTOR
@@ -65,8 +61,6 @@ public class PlayerInAirState : PlayerState
     {
         base.Enter();
 
-        frames = 0;
-
         StartCoyoteTime(); // Start coyote timer
     }
 
@@ -89,13 +83,11 @@ public class PlayerInAirState : PlayerState
     {
         base.LogicUpdate();
 
-        frames++;
-
         GetInputs();
 
         player.Animator.SetFloat("yVelocity", player.CurrentVelocity.y);    // control blend tree parameter
         player.CheckIfShouldFlip(xInput);
-        
+
         CheckCoyoteTime();
         CheckWallJumpCoyoteTime();
 
@@ -253,5 +245,5 @@ public class PlayerInAirState : PlayerState
             player.SetVelocityY(-playerData.MaxFaliingSpeed);
         }
     }
-} 
+}
 #endregion
