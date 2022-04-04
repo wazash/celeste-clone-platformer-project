@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class PlayerDashState : PlayerAbilityState
 {
-    private float startDash;
     private float lastDashTime;
+    private float freezeCurrentDuration;
+    private float dashCurrentDuration;
 
     private bool canDash;
-    private bool isDashing = false;
+    private bool isDashing;
+    private bool isFreezing;
 
     private Vector2 dashDirection;
     private Vector2 dashDirectionInput;
@@ -21,48 +23,53 @@ public class PlayerDashState : PlayerAbilityState
     {
         base.Enter();
 
-        startDash = startTime + playerData.BeforeDashFreezeTime;
         player.SetVelocityZero();
 
         canDash = false;
 
         player.InputHandler.UseDashInput();
         player.JumpState.DecreaseAmountOfJumpsLeft();
-    }
 
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
+        isFreezing = true;
+        isDashing = false;
 
-        if (!isDashing)
-        {
-            DetermineDashDirection();
-        }
-
-        if (Time.time >= startTime + playerData.BeforeDashFreezeTime)
-        {
-            isDashing = true;
-
-            player.Animator.SetFloat("yVelocity", player.CurrentVelocity.y);
-            player.CheckIfShouldFlip(Mathf.RoundToInt(dashDirection.x));
-
-            if (Time.time >= startDash + playerData.DashTime)
-            {
-                ApplyEndDashGravity();
-                lastDashTime = Time.time;
-                isDashing = false;
-                SetAbilityDone();
-            }
-        }
+        dashCurrentDuration = 0;
+        freezeCurrentDuration = 0;
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
 
+        player.Animator.SetFloat("yVelocity", player.CurrentVelocity.y);
+        player.CheckIfShouldFlip(Mathf.RoundToInt(dashDirection.x));
+
+        // Short freeze before actual dash - time to set/change direction
+        if (isFreezing)
+        {
+            freezeCurrentDuration += Time.fixedDeltaTime;
+            DetermineDashDirection();
+
+            if (freezeCurrentDuration >= playerData.BeforeDashFreezeTime)
+            {
+                isFreezing = false;
+                isDashing = true;
+            }
+        }
+
+        // Dash - apply force with specific direction
         if (isDashing)
         {
+            dashCurrentDuration += Time.fixedDeltaTime;
             Dash();
+
+            if (dashCurrentDuration >= playerData.DashTime)
+            {
+                isDashing = false;
+                lastDashTime = Time.time;
+                ApplyEndDashGravity();
+                SetAbilityDone();
+            }
         }
     }
     #endregion
