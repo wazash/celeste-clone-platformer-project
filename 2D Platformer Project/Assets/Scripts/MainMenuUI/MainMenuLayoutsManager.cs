@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MainMenuLayoutsManager : MonoBehaviour
@@ -11,6 +12,8 @@ public class MainMenuLayoutsManager : MonoBehaviour
 
     [SerializeField] private float duration;
 
+    [SerializeField] private GameObject goToSelect;
+
     private static int clicksCounter;
 
     private void Start()
@@ -21,10 +24,11 @@ public class MainMenuLayoutsManager : MonoBehaviour
         SetButtonsStatus(false);
     }
 
-    public void ShowLayout()
+    public void ShowLayout(GameObject goToSelect)
     {
         // Set butons active
         SetButtonsStatus(true);
+        EventsManager.OnSelectedMenuItem.Invoke(goToSelect);
 
         if(clicksCounter < 1)
         {

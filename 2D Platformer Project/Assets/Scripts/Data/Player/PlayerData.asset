@@ -26,7 +26,7 @@ MonoBehaviour:
   AmountOfJumps: 1
   CoyoteTime: 0.1
   MaxFaliingSpeed: 7
-  JumpVelocityReductionFactor: 0.35
+  JumpVelocityReductionFactor: 0.6
   WallJumpVelocityMultiplier: 0.85
   WallJumpTime: 0.1
   WallJumpOffAngle: {x: 1, y: 1}
@@ -54,4 +54,4 @@ MonoBehaviour:
     JumpClip: {fileID: 8300000, guid: 0ce35170394ec444bbbad975248f7f88, type: 3}
     LandClip: {fileID: 8300000, guid: 239a0de8b5b2bed41abb84883a7bd8f9, type: 3}
     FootstepsClip: {fileID: 8300000, guid: e62db8b70911ebe40a582352ddc54eef, type: 3}
-  CurrentSpawnpointPosition: {x: 9.02, y: 1.5925002}
+  CurrentSpawnpointPosition: {x: -8.940001, y: -1.5350003}

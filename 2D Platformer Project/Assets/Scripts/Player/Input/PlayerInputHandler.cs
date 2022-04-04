@@ -15,6 +15,7 @@ public class PlayerInputHandler : MonoBehaviour
     public bool JumpInputStop { get; private set; }
     public bool GrabWallInput { get; private set; }
     public bool DashInput { get; private set; }
+    public bool PauseInput { get; private set; }
 
     [SerializeField, Tooltip("Time, how long input will 'hold' true in jump input value after press jump button")]
     private float inputHoldTime = 0.2f;
@@ -139,4 +140,13 @@ public class PlayerInputHandler : MonoBehaviour
 
         DashDirectionInput = Vector2Int.RoundToInt(RawDashDirectionInput.normalized);
     }
+
+    public void OnPauseInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            PauseInput = !PauseInput;
+        }
+    }
+
 }

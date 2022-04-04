@@ -98,7 +98,7 @@ public class PlayerInAirState : PlayerState
         if (isGrounded && player.CurrentVelocity.y < playerData.MinGroundedVelocityY)
         {
             player.Particles.LandingPS.Play();
-            EventsManager.OnPlayeySfxPlay.Invoke(playerData.PlayerSounds.LandClip);
+            EventsManager.OnPlayedSfxPlay.Invoke(playerData.PlayerSounds.LandClip);
             if (xInput == 0)
             {
                 stateMachine.ChangeState(player.IdleState);

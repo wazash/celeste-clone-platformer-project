@@ -190,6 +190,8 @@ GameObject:
   - component: {fileID: 8374512372776052224}
   - component: {fileID: 129861405}
   - component: {fileID: 129861414}
+  - component: {fileID: 129861407}
+  - component: {fileID: 129861406}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -401,6 +403,46 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 63c8b7cf-2553-45a0-8b9f-659f45318e27
     m_ActionName: Gameplay/DashDirection[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d349f992-1b4c-4c7f-9678-db6c1c6c5421
+    m_ActionName: UI/Navigate[/DualShock4GamepadHID/leftStick/up,/DualShock4GamepadHID/rightStick/up,/DualShock4GamepadHID/leftStick/down,/DualShock4GamepadHID/rightStick/down,/DualShock4GamepadHID/leftStick/left,/DualShock4GamepadHID/rightStick/left,/DualShock4GamepadHID/leftStick/right,/DualShock4GamepadHID/rightStick/right,/DualShock4GamepadHID/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dbdfc5b5-9796-453c-9e90-df52e7e09c43
+    m_ActionName: UI/Submit[/Keyboard/enter,/DualShock4GamepadHID/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a23f659f-38aa-472d-81aa-f19a7d5266d5
+    m_ActionName: UI/Cancel[/Keyboard/escape,/DualShock4GamepadHID/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a114031d-3d4b-48c5-8a2e-692b00c82d05
+    m_ActionName: UI/Point[/Mouse/position,/Pen/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3de690bb-d41a-4424-ad30-26722a83966b
+    m_ActionName: UI/Click[/Mouse/leftButton,/Pen/tip]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a7c52cf1-b20a-4486-a70a-0b9e91b8c073
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4e2a547f-f0a8-4055-a8c0-f006e13dbd63
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cc2508fb-c228-41a2-89fb-21b68cffdbd9
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c82dd496-a17c-4b33-b2de-513a6f8f826a
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 749f642d-421a-4c9d-80cc-624a38db2c72
+    m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -473,6 +515,116 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleDurationOffset: -0.3
+--- !u!82 &129861407
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2483931940027751289}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 4467999518674519107, guid: fbb541d1a9e428141895110e64880d95, type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.6
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &129861406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2483931940027751289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bcf2a7c7b533124da456eef7d929d62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepsPlayOffset: 0.5
+  pitchValue: {x: 0.85, y: 1.15}
 --- !u!1 &6102918966278689954
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public static class EventsManager
     public static readonly EventBase OnPlayerDeath = new EventBase();
     public static readonly EventBase OnPlayerRespawn = new EventBase();
 
-    public static readonly EventBase<AudioClip> OnPlayeySfxPlay = new EventBase<AudioClip>();
+    public static readonly EventBase<AudioClip> OnPlayedSfxPlay = new EventBase<AudioClip>();
 
     // BG events
     public static readonly EventBase OnBGRespawn = new EventBase();
@@ -20,6 +20,8 @@ public static class EventsManager
     // Sounds events
     public static readonly EventBase<float, float> OnMusicFade = new EventBase<float, float>();
 
+    // UI events
+    public static readonly EventBase<GameObject> OnSelectedMenuItem = new EventBase<GameObject>();
     // Keys events
     public static readonly EventBase<int> OnKeyCollected = new EventBase<int>();
 

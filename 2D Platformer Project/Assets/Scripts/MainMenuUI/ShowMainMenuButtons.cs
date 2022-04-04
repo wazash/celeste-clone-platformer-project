@@ -1,6 +1,4 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,10 +18,10 @@ public class ShowMainMenuButtons : MonoBehaviour
         buttons = GetComponentsInChildren<Button>();
     }
 
-    void Start()
+    private void Start()
     {
         // Calculate delay based on startinf fade duration
-        delay = fadeCoverDelay.Value + fadeCoverDuration.Value; 
+        delay = fadeCoverDelay.Value + fadeCoverDuration.Value;
 
         // Push buttons one by one
         buttons[0].GetComponent<RectTransform>().DOAnchorPosX(endPositionX, duration.Value).SetEase(Ease.OutBack).SetDelay(delay).OnComplete(() =>

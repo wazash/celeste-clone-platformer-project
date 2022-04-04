@@ -11,11 +11,11 @@ public class PlayerSoundManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventsManager.OnPlayeySfxPlay.AddListener(PlayPlayerSFX);
+        EventsManager.OnPlayedSfxPlay.AddListener(PlayPlayerSFX);
     }
     private void OnDisable()
     {
-        EventsManager.OnPlayeySfxPlay.RemoveListener(PlayPlayerSFX);
+        EventsManager.OnPlayedSfxPlay.RemoveListener(PlayPlayerSFX);
     }
 
     private void Start()

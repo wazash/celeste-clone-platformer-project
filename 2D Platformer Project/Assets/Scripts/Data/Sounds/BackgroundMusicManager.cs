@@ -30,14 +30,19 @@ public class BackgroundMusicManager : MonoBehaviour
 
     private void Update()
     {
-        if(SceneManager.GetActiveScene().buildIndex == 0 && audioSource.clip != bgMusic.MainMenuClip)
+        BackgroundMusicChanger();
+    }
+
+    private void BackgroundMusicChanger()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 0 && audioSource.clip != bgMusic.MainMenuClip)
         {
             audioSource.clip = bgMusic.MainMenuClip;
             EventsManager.OnMusicFade.Invoke(1, duration.Value);
             audioSource.Play();
         }
 
-        if(SceneManager.GetActiveScene().buildIndex == 1 && audioSource.clip != bgMusic.ForestLevelClip)
+        if (SceneManager.GetActiveScene().buildIndex == 1 && audioSource.clip != bgMusic.ForestLevelClip)
         {
             audioSource.clip = bgMusic.ForestLevelClip;
             EventsManager.OnMusicFade.Invoke(1, duration.Value);
