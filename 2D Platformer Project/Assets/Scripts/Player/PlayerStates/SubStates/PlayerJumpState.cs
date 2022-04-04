@@ -10,12 +10,9 @@ public class PlayerJumpState : PlayerAbilityState
         AmountOfJumpsLeft = playerData.AmountOfJumps;
     }
 
-    public override void PhysicsUpdate()
+    public override void Enter()
     {
-        base.PhysicsUpdate();
-
-        // Make jump
-        Jump();
+        base.Enter();
 
         // Playe particles
         player.Particles.JumpingPS.Play();
@@ -23,12 +20,19 @@ public class PlayerJumpState : PlayerAbilityState
         // Play sound
         EventsManager.OnPlayedSfxPlay.Invoke(playerData.PlayerSounds.JumpClip);
 
-        player.InputHandler.UseJumpInput();
         player.InAirState.SetIsJumping(true);
 
         DecreaseAmountOfJumpsLeft();
         player.InAirState.StopCoyoteTime();
+    }
 
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+
+        // Make jump
+        Jump();
+               
         // Jump is ability, need to be set true to mark jump is done 
         SetAbilityDone();
     }
@@ -37,6 +41,8 @@ public class PlayerJumpState : PlayerAbilityState
     {
         //player.SetVelocityY(playerData.InitialJumpVelocity);
         player.Rigidbody.AddForce(playerData.InitialJumpVelocity * Vector2.up, ForceMode2D.Impulse);
+
+        player.InputHandler.UseJumpInput();
     }
 
     public bool CanJump() => AmountOfJumpsLeft > 0;

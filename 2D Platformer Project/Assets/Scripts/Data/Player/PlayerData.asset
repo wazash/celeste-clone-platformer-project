@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191c32a5c731586418d4ddcb56bcf40e, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  Gravity: -28.40237
+  Gravity: -48
   GroundedGravity: -0.05
   MovementVelocity: 5.5
   Acceleration: 16
@@ -21,8 +21,8 @@ MonoBehaviour:
   MinGroundedVelocityX: 0.01
   MinGroundedVelocityY: 0.01
   MaxJumpHeight: 1.5
-  InitialJumpVelocity: 9.230769
-  MaxJumpTime: 0.65
+  InitialJumpVelocity: 12
+  MaxJumpTime: 0.5
   AmountOfJumps: 1
   CoyoteTime: 0.1
   MaxFaliingSpeed: 7
@@ -32,7 +32,7 @@ MonoBehaviour:
   WallJumpOffAngle: {x: 1, y: 1}
   WallJumpUpAngle: {x: 0.5, y: 2}
   BeforeDashFreezeTime: 0.1
-  DashVelocity: 2.25
+  DashVelocity: 2
   AmountOfDashes: 1
   DashCooldown: 0.5
   DashTime: 0.15

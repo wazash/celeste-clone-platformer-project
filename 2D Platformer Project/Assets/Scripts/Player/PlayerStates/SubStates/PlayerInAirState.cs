@@ -23,6 +23,8 @@ public class PlayerInAirState : PlayerState
 
     private bool coyoteTime;
     private bool wallJumpCoyoteTime;
+
+    int frames;
     #endregion
 
     #region CONSTRUCTOR
@@ -63,12 +65,16 @@ public class PlayerInAirState : PlayerState
     {
         base.Enter();
 
+        frames = 0;
+
         StartCoyoteTime(); // Start coyote timer
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        //Debug.Log(frames);
 
         oldIsTouchingWall = false;
         oldIsTouchingWallBack = false;
@@ -82,6 +88,8 @@ public class PlayerInAirState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        frames++;
 
         GetInputs();
 
