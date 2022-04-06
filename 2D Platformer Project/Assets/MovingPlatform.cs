@@ -9,9 +9,7 @@ public class MovingPlatform : MonoBehaviour
 
     [SerializeField] private Transform startPosition, endPosition;
 
-
     private new Rigidbody2D rigidbody;
-    private Tween tween;
     private Sequence sequence;
 
     private void Start()
