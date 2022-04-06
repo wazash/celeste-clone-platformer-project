@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191c32a5c731586418d4ddcb56bcf40e, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  Gravity: -48
+  Gravity: -33.333332
   GroundedGravity: -0.05
   MovementVelocity: 5.5
   Acceleration: 16
@@ -21,8 +21,8 @@ MonoBehaviour:
   MinGroundedVelocityX: 0.01
   MinGroundedVelocityY: 0.01
   MaxJumpHeight: 1.5
-  InitialJumpVelocity: 12
-  MaxJumpTime: 0.5
+  InitialJumpVelocity: 10
+  MaxJumpTime: 0.6
   AmountOfJumps: 1
   CoyoteTime: 0.1
   MaxFaliingSpeed: 7
