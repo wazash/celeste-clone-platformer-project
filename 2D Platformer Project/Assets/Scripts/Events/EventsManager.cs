@@ -22,6 +22,7 @@ public static class EventsManager
 
     // UI events
     public static readonly EventBase<GameObject> OnSelectedMenuItem = new EventBase<GameObject>();
+    
     // Keys events
     public static readonly EventBase<int> OnKeyCollected = new EventBase<int>();
 
