@@ -5158,7 +5158,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: _BG_MUSIC_MANAGER
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1365577932202216385, guid: 714b98bda27384344873d9830fb0580b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 714b98bda27384344873d9830fb0580b, type: 3}
 --- !u!1001 &1617979567606231578
 PrefabInstance:
