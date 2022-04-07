@@ -25,6 +25,8 @@ public class RoomsPlayerPositionChanging : MonoBehaviour
                 }
                 player.SetVelocityY(enterVel);
             }
+
+            EventsManager.OnYellowAppleRestart.Invoke(); // Restart yellow apple
         }
     }
 

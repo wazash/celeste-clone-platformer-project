@@ -42,6 +42,9 @@ public class PlayerDeathSequence : MonoBehaviour
 
         // play bg animation
         EventsManager.OnBGRespawn.Invoke();
+        // restart yellow apple
+        EventsManager.OnYellowAppleRestart.Invoke();
+
         yield return new WaitForSecondsRealtime(bgAnimationTime.Value + bgAnimationDurationOffset);
 
         // respawn player
