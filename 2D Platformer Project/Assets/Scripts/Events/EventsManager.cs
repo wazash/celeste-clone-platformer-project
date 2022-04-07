@@ -27,6 +27,7 @@ public static class EventsManager
 
     //Apple events
     public static readonly EventBase OnRedAppleCollected = new EventBase();
+    public static readonly EventBase OnYellowAppleRestart = new EventBase();
 
     // Pillars doors events
     public static readonly EventBase OnPillarDoorsStarted = new EventBase();
