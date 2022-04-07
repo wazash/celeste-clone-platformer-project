@@ -9,6 +9,8 @@ public class MovingPlatform : MonoBehaviour
 
     [SerializeField] private Transform startPosition, endPosition;
 
+    [SerializeField] private bool oneWayMove;
+
     private new Rigidbody2D rigidbody;
     private Sequence sequence;
 
@@ -16,14 +18,26 @@ public class MovingPlatform : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
 
-        sequence = DOTween.Sequence();
-        sequence.Append(transform.DOMove(endPosition.position, duration).SetEase(Ease.InCubic));
-        sequence.AppendInterval(1);
-        sequence.Append(transform.DOMove(startPosition.position, duration * 2).SetEase(Ease.Linear));
-        sequence.AppendInterval(.5f);
-        sequence.SetLoops(-1, LoopType.Restart);
-        sequence.OnStepComplete(() => sequence.Pause());
-        sequence.Pause();
+        if (!oneWayMove)
+        {
+            sequence = DOTween.Sequence();
+            sequence.Append(transform.DOMove(endPosition.position, duration).SetEase(Ease.InCubic));
+            sequence.AppendInterval(1);
+            sequence.Append(transform.DOMove(startPosition.position, duration * 2).SetEase(Ease.Linear));
+            sequence.AppendInterval(.5f);
+            sequence.SetLoops(-1, LoopType.Restart);
+            sequence.OnStepComplete(() => sequence.Pause());
+            sequence.Pause();
+        }
+        if (oneWayMove)
+        {
+            sequence = DOTween.Sequence();
+            sequence.Append(transform.DOMove(endPosition.position, duration).SetEase(Ease.InCubic));
+            sequence.OnComplete(() => sequence.Kill());    
+            sequence.Pause();
+        }
+
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -31,6 +45,10 @@ public class MovingPlatform : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.transform.parent = transform;
+            if (oneWayMove)
+            {
+                sequence.Play();
+            }
         }
     }
 
@@ -38,7 +56,7 @@ public class MovingPlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (!sequence.IsPlaying())
+            if (!oneWayMove && !sequence.IsPlaying())
             {
                 sequence.Play();
             }
