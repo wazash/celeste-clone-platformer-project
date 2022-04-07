@@ -16,11 +16,6 @@ public class RoomsPlayerPositionChanging : MonoBehaviour
 
             var relativePosition = transform.InverseTransformPoint(collision.transform.position);
 
-            //float xAbs = Mathf.Abs(relativePosition.x);
-            //float yAbs = Mathf.Abs(relativePosition.y);
-
-            Debug.Log(player.StateMachine.CurrentState);
-
             if(relativePosition.y <= 0)
             {
                 if(player.StateMachine.CurrentState == player.WallClimbState)
