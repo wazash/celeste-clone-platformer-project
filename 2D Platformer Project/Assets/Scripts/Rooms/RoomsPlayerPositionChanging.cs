@@ -18,11 +18,8 @@ public class RoomsPlayerPositionChanging : MonoBehaviour
 
             if(relativePosition.y <= 0)
             {
-                if(player.StateMachine.CurrentState == player.WallClimbState)
-                {
-                    player.InputHandler.playerInput.currentActionMap.Disable();
-                    player.StateMachine.ChangeState(player.InAirState);
-                }
+                player.InputHandler.playerInput.currentActionMap.Disable();
+                player.StateMachine.ChangeState(player.InAirState);
                 player.SetVelocityY(enterVel);
             }
 
